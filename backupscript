@@ -9,7 +9,7 @@
 # Fuer Nextcloud user gibt es auch Notifications (Plugin Admin Notification muss aktiviert sein!)
 # Dieses Skript kann nur fuer Docker umgebungen verwendet werden, die das Backup auf einen Proxmox server schreiben.
 # Erstellt von Easy Tec (youtube.com/EasyTec100)
-# Dieses Skript gibts hier: blog.easytec.tech/SkriptXY
+# Dieses Skript gibts hier: https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
 #
 
 #
