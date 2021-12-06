@@ -3,6 +3,7 @@ This repository is about backup/restore scripts for an Unraid system. (Script in
 These backup/restore scripts have been tested by me personally. 
 However, I assume no liability if these scripts cause any kind of damage. 
 Any person can check these scripts at any time! Before using one of the scripts please fill in variables!
+ATTENTION! ALL MY SCRIPTS ARE CURRENTLY IN BETA VERSION!!! THERE MAY BE ERRORS OR BUGS!!!
 
 With my scripts in this repository you can make a backup/Restore from an Unraid server. This backup is written to a proxmox server. 
 In this scripts is to be noted:
