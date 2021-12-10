@@ -1,19 +1,18 @@
 #!/bin/bash
 #
 # Bash skript fuer eine rsync uebertragung der Unraid Daten auf einen externen Backup-server (Proxmox) 
-# + mit einer MariaDB-sicherung und Nextcloud Notification
+# + mit einer MariaDB-sicherung
 #
 # Enthaelt Variablen und eine Message in Unraid.
 # Dieses Skript ist fuer eine rsync uebertragung der Unraid daten auf einen externen Backup-server geschrieben worden.
 # Fuer MariaDB user gibt es auch ein Backup der Datenbanken
-# Fuer Nextcloud user gibt es auch Notifications (Plugin Admin Notification muss aktiviert sein!)
 # Dieses Skript kann nur fuer Docker umgebungen verwendet werden, die das Backup auf einen Proxmox server schreiben.
 # Erstellt von Easy Tec (youtube.com/EasyTec100)
 # Dieses Skript gibts hier: https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
 #
 
 #
-# Version 1.2.6
+# Version 1.2.7
 # Version BETA 
 #
 #
@@ -35,28 +34,6 @@ backupServerZielPfad2="Unraid-Backups/Shares"
 
 # RSYNC user (Standard = rsyncuser)
 rsync_user="rsyncuser"
-
-### Variablen - Nextcloud Admin-Notification (ANPASSEN!) ###
-# Nextcloud-user (Bitte alle User [vollstaendiger Name] in die "" eingeben)
-# Nextcloud Admin Notification VARIABLEN
-# HIERFUER MUSS EIN PLUGIN AUF NEXTCLOUD INSTALLIERT SEIN!
-# (WENN DIES NICHT BENÖTIGT WIRD, BITTE AUSKOMMENTIEREN!)
-# Leerzeichen durch ein '\ ' ersetzen! (leerzeichen im '' ist wichtig)
-Nextcloud_user_1="user\ 1"
-Nextcloud_user_2="user\ 2"
-Nextcloud_user_3="user\ 3"
-Nextcloud_user_4="user\ 4"
-Nextcloud_user_5="user\ 5"
-Nextcloud_user_6="user\ 6"
-Nextcloud_user_7="user\ 7"
-Nextcloud_user_8="user\ 8"
-Nextcloud_user_9="user\ 9"
-
-# Name deiner Nextcloud-instanz (diese Nextcloud erhaelt die Benachrichtigungen 
-# Dem entsprechend muessen auch die Nutzer von oben der Nextcloud-instanz entsprechen!!
-# ("nextcloud" ist ein Beispiel)
-DockerName_Nextcloud_Notification="nextcloud"
-
 
 
 ### Variablen - MariaDB dumps (ANPASSEN!) ###
@@ -534,33 +511,6 @@ echo
 
 ###
 
-# Nextcloud Admin Notification
-# HIERFUER MUSS EIN PLUGIN (admin Notfication) AUF NEXTCLOUD INSTALLIERT SEIN!
-# alle User
-# (WENN DIES NICHT BENÖTIGT WIRD, BITTE AUSKOMMENTIEREN!)
-echo "<font color='blue'>Nextcloud Admin Notifications werden abgeschickt...</font>"
-echo "<font color='blue'>Dies dauert 50 sekunden...</font>"
-docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "In\ den\ naechsten\ 5\ minuten\ wird\ ein\ Backup\ des\ Servers\ gemacht.\ Bitte\ breche\ alle\ gerade\ laufenden\ Vorgaenge\ ab!\ Danke." "${Nextcloud_user_1}" "Backup"
-sleep 5
-docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "In\ den\ naechsten\ 5\ minuten\ wird\ ein\ Backup\ des\ Servers\ gemacht.\ Bitte\ breche\ alle\ gerade\ laufenden\ Vorgaenge\ ab!\ Danke." "${Nextcloud_user_2}" "Backup"
-sleep 5
-docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "In\ den\ naechsten\ 5\ minuten\ wird\ ein\ Backup\ des\ Servers\ gemacht.\ Bitte\ breche\ alle\ gerade\ laufenden\ Vorgaenge\ ab!\ Danke." "${Nextcloud_user_3}" "Backup"
-sleep 5
-docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "In\ den\ naechsten\ 5\ minuten\ wird\ ein\ Backup\ des\ Servers\ gemacht.\ Bitte\ breche\ alle\ gerade\ laufenden\ Vorgaenge\ ab!\ Danke." "${Nextcloud_user_4}" "Backup"
-sleep 5
-docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "In\ den\ naechsten\ 5\ minuten\ wird\ ein\ Backup\ des\ Servers\ gemacht.\ Bitte\ breche\ alle\ gerade\ laufenden\ Vorgaenge\ ab!\ Danke." "${Nextcloud_user_5}" "Backup"
-sleep 5
-docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "In\ den\ naechsten\ 5\ minuten\ wird\ ein\ Backup\ des\ Servers\ gemacht.\ Bitte\ breche\ alle\ gerade\ laufenden\ Vorgaenge\ ab!\ Danke." "${Nextcloud_user_6}" "Backup"
-sleep 5
-docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "In\ den\ naechsten\ 5\ minuten\ wird\ ein\ Backup\ des\ Servers\ gemacht.\ Bitte\ breche\ alle\ gerade\ laufenden\ Vorgaenge\ ab!\ Danke." "${Nextcloud_user_7}" "Backup"
-sleep 5
-docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "In\ den\ naechsten\ 5\ minuten\ wird\ ein\ Backup\ des\ Servers\ gemacht.\ Bitte\ breche\ alle\ gerade\ laufenden\ Vorgaenge\ ab!\ Danke." "${Nextcloud_user_8}" "Backup"
-sleep 5
-docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "In\ den\ naechsten\ 5\ minuten\ wird\ ein\ Backup\ des\ Servers\ gemacht.\ Bitte\ breche\ alle\ gerade\ laufenden\ Vorgaenge\ ab!\ Danke." "${Nextcloud_user_9}" "Backup"
-sleep 5
-
-
-
 # Backup-Server starten
 echo "<font color='blue'>Backup Server wird gestartet...</font>"
 python3 /boot/config/plugins/user.scripts/scripts/wake.py
@@ -581,30 +531,6 @@ else
           echo "<font color='green'>Server nun aktiv. Es wird fortgefahren...</font>"
         else
           echo "<font color='red'>Fehler. Server startet nicht! Breche ab...</font>"
-
-           # Nextcloud Admin Notification
-           # HIERFUER MUSS EIN PLUGIN AUF NEXTCLOUD INSTALLIERT SEIN!
-           # alle User
-           # (WENN DIES NICHT BENÖTIGT WIRD, BITTE AUSKOMMENTIEREN!)
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Error!\ Backup\ Abgebrochen.\ Dennoch\ kann\ diese\ Cloud\ ohne\ Probleme\ weiter\ genutzt\ werden!" "${Nextcloud_user_1}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Error!\ Backup\ Abgebrochen.\ Dennoch\ kann\ diese\ Cloud\ ohne\ Probleme\ weiter\ genutzt\ werden!" "${Nextcloud_user_2}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Error!\ Backup\ Abgebrochen.\ Dennoch\ kann\ diese\ Cloud\ ohne\ Probleme\ weiter\ genutzt\ werden!" "${Nextcloud_user_3}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Error!\ Backup\ Abgebrochen.\ Dennoch\ kann\ diese\ Cloud\ ohne\ Probleme\ weiter\ genutzt\ werden!" "${Nextcloud_user_4}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Error!\ Backup\ Abgebrochen.\ Dennoch\ kann\ diese\ Cloud\ ohne\ Probleme\ weiter\ genutzt\ werden!" "${Nextcloud_user_5}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Error!\ Backup\ Abgebrochen.\ Dennoch\ kann\ diese\ Cloud\ ohne\ Probleme\ weiter\ genutzt\ werden!" "${Nextcloud_user_6}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Error!\ Backup\ Abgebrochen.\ Dennoch\ kann\ diese\ Cloud\ ohne\ Probleme\ weiter\ genutzt\ werden!" "${Nextcloud_user_7}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Error!\ Backup\ Abgebrochen.\ Dennoch\ kann\ diese\ Cloud\ ohne\ Probleme\ weiter\ genutzt\ werden!" "${Nextcloud_user_8}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Error!\ Backup\ Abgebrochen.\ Dennoch\ kann\ diese\ Cloud\ ohne\ Probleme\ weiter\ genutzt\ werden!" "${Nextcloud_user_9}" "Backup"
-           sleep 5
-
             exit 1
   fi
  fi
@@ -1384,56 +1310,10 @@ sleep 5
 if ! ssh "${rsync_user}"@"${backupServerIP}" "ls /"${backupServerZielPfad}" >/dev/null 2>&1" && ! ssh "${rsync_user}"@"${backupServerIP}" "ls /"${backupServerZielPfad2}" >/dev/null 2>&1"
   then
     /usr/local/emhttp/webGui/scripts/notify -i normal -s "Backup abgeschlossen." -d "Backup erfolgreich auf Proxmox geschrieben."
-    echo "<font color='green'>Skript erfolgreich abgeschlossen.</font>"
-           # Nextcloud Admin Notification
-           # HIERFUER MUSS EIN PLUGIN AUF NEXTCLOUD INSTALLIERT SEIN!
-           # alle User
-           # (WENN DIES NICHT BENÖTIGT WIRD, BITTE AUSKOMMENTIEREN!)
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ erfolgreich\ abgeschlossen.\ Diese\ Cloud\ kann\ wieder\ ganz\ normal\ weiter\ laufen.\" "${Nextcloud_user_1}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ erfolgreich\ abgeschlossen.\ Diese\ Cloud\ kann\ wieder\ ganz\ normal\ weiter\ laufen.\" "${Nextcloud_user_2}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ erfolgreich\ abgeschlossen.\ Diese\ Cloud\ kann\ wieder\ ganz\ normal\ weiter\ laufen.\" "${Nextcloud_user_3}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ erfolgreich\ abgeschlossen.\ Diese\ Cloud\ kann\ wieder\ ganz\ normal\ weiter\ laufen.\" "${Nextcloud_user_4}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ erfolgreich\ abgeschlossen.\ Diese\ Cloud\ kann\ wieder\ ganz\ normal\ weiter\ laufen.\" "${Nextcloud_user_5}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ erfolgreich\ abgeschlossen.\ Diese\ Cloud\ kann\ wieder\ ganz\ normal\ weiter\ laufen.\" "${Nextcloud_user_6}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ erfolgreich\ abgeschlossen.\ Diese\ Cloud\ kann\ wieder\ ganz\ normal\ weiter\ laufen.\" "${Nextcloud_user_7}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ erfolgreich\ abgeschlossen.\ Diese\ Cloud\ kann\ wieder\ ganz\ normal\ weiter\ laufen.\" "${Nextcloud_user_8}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ erfolgreich\ abgeschlossen.\ Diese\ Cloud\ kann\ wieder\ ganz\ normal\ weiter\ laufen.\" "${Nextcloud_user_9}" "Backup"
-           sleep 5
-           #docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ fehlgeschlagen!\ Diese\ Cloud\ kann\ dennoch\ ganz\ normal\ weiter\ betrieben\ werden.\" "${Nextcloud_user_10}" "Backup"
-           #sleep 5
+    echo "<font color='green'>Skript erfolgreich abgeschlossen.</font>"         
   else
     /usr/local/emhttp/webGui/scripts/notify -i alert -s "Backup fehlgeschlagen." -d "Backup konnte nicht auf Proxmox geschrieben werden."
     echo "<font color='red'>Skript fehlgeschlagen.</font>"
-           # Nextcloud Admin Notification
-           # HIERFUER MUSS EIN PLUGIN AUF NEXTCLOUD INSTALLIERT SEIN!
-           # alle User
-           # (WENN DIES NICHT BENÖTIGT WIRD, BITTE AUSKOMMENTIEREN!)
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ fehlgeschlagen!\ Diese\ Cloud\ kann\ dennoch\ ganz\ normal\ weiter\ betrieben\ werden.\" "${Nextcloud_user_1}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ fehlgeschlagen!\ Diese\ Cloud\ kann\ dennoch\ ganz\ normal\ weiter\ betrieben\ werden.\" "${Nextcloud_user_2}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ fehlgeschlagen!\ Diese\ Cloud\ kann\ dennoch\ ganz\ normal\ weiter\ betrieben\ werden.\" "${Nextcloud_user_3}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ fehlgeschlagen!\ Diese\ Cloud\ kann\ dennoch\ ganz\ normal\ weiter\ betrieben\ werden.\" "${Nextcloud_user_4}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ fehlgeschlagen!\ Diese\ Cloud\ kann\ dennoch\ ganz\ normal\ weiter\ betrieben\ werden.\" "${Nextcloud_user_5}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ fehlgeschlagen!\ Diese\ Cloud\ kann\ dennoch\ ganz\ normal\ weiter\ betrieben\ werden.\" "${Nextcloud_user_6}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ fehlgeschlagen!\ Diese\ Cloud\ kann\ dennoch\ ganz\ normal\ weiter\ betrieben\ werden.\" "${Nextcloud_user_7}" "Backup"
-           sleep 5
-           docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ fehlgeschlagen!\ Diese\ Cloud\ kann\ dennoch\ ganz\ normal\ weiter\ betrieben\ werden.\" "${Nextcloud_user_8}" "Backup"
-           sleep 5
-           #docker exec "${DockerName_Nextcloud_Notification}" sudo -u root occ notification:generate -l "Backup\ fehlgeschlagen!\ Diese\ Cloud\ kann\ dennoch\ ganz\ normal\ weiter\ betrieben\ werden.\" "${Nextcloud_user_9}" "Backup"
-           #sleep 5
 fi
 echo
 
