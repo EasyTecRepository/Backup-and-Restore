@@ -12,4 +12,4 @@ In this scripts is to be noted:
 - Instruction can be found on my german blog (https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/) [My blog will also be available in English soon]
 - Read the README.md and the LICENCE.md carefully if you want to use or reuse the script. (more infos you can get on my blog)
 
-last edit: 29.01.2022
+last change: 29.01.2022
