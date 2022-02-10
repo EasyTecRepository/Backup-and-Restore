@@ -4,15 +4,18 @@
 #
 # Enthaelt Variablen und eine Message in Unraid.
 # Dieses Skript ist fuer eine rsync uebertragung der (externen backup-) Proxmox daten auf einen externen Unraid-server geschrieben worden.
-# Fuer MariaDB user gibt es auch ein Restore der Datenbanken
+# Fuer MariaDB user gibt es KEINE FUNKTION für ein Restore der Datenbanken (PRUEFE GITHUB NACH EINEM SOLCHEN SKRIPT)
 # Dieses Skript kann nur fuer Docker umgebungen verwendet werden, die das Backup auf einen Proxmox server schreiben.
 # Erstellt von Easy Tec (youtube.com/EasyTec100)
-# Dieses Skript gibts hier: https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
+# Anleitung (German): https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
+# Dieses Skript muss von Hand ausgeführt werden!
+# Script Language: German
 #
 
+
 #
-# Version 1.0.5
-# nur fuer backupskript Versionen ab 1.2.7 zugelassen!
+# Version 1.0.8
+# nur fuer backupskript Versionen ab 1.2.8 zugelassen!
 # Version BETA
 #
 #
@@ -34,78 +37,6 @@ backupServerZielPfad2="Unraid-Backups/Shares"
 
 # RSYNC user (Standard = rsyncuser)
 rsync_user="rsyncuser"
-
-
-### Variablen - MariaDB dumps (ANPASSEN!) ###
-### Wenn mehr / weniger Variablen benoetigt werden, hinzufuegen / auskommentieren. (auch im Skript) ###
-# Dieser abschnitt muss auskommentiert werden, wenn keine Dumps ausgeführt werden sollen!!
-# Alle Nummern muessen zu der gleichen Datenbank gehoehren!
-
-## Funktion für error messages ##
-errorecho() { cat <<< "$@" 1>&2; }
-
-## Funktion fuer die neusten backup-dateien ##
-latestfile1=$(ls -rt1 | tail -1)
-latestfile2=$(ls -rt1 | tail -1)
-latestfile3=$(ls -rt1 | tail -1)
-latestfile4=$(ls -rt1 | tail -1)
-latestfile5=$(ls -rt1 | tail -1)
-latestfile6=$(ls -rt1 | tail -1)
-
-## Passwort für MariaDB (SiChErEsPaSsWoRt)
-mariadbPassWD="SiChErEsPaSsWoRt"
-
-## MariaDB config path (standard-pfad)
-db_config_path="mnt/user/mariadb_backups/MariaDB/config"
-
-## MariaDB verzeichnis path (Standard-pfad)
-db_verzeichnis="mnt/user/appdata/mariadb"
-
-## Pfad fuer MariaDB dump 1 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_1="/mnt/user/mariadb_backups/dump/datenbank1"
-
-## Pfad fuer MariaDB dump 2 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_2="/mnt/user/mariadb_backups/dump/datenbank2"
-
-## Pfad fuer MariaDB dump 3 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_3="/mnt/user/mariadb_backups/dump/datenbank3"
-
-## Pfad fuer MariaDB dump 4 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_4="/mnt/user/mariadb_backups/dump/datenbank4"
-
-## Pfad fuer MariaDB dump 5 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_5="/mnt/user/mariadb_backups/dump/datenbank5"
-
-## Pfad fuer MariaDB dump 6 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_6="/mnt/user/mariadb_backups/dump/datenbank6"
-
-## Datenbank von MariaDB (1 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_1="datenbank1"
-
-## Datenbank von MariaDB (2 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_2="datenbank2"
-
-## Datenbank von MariaDB (3 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_3="datenbank3"
-
-## Datenbank von MariaDB (4 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_4="datenbank4"
-
-## Datenbank von MariaDB (5 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_5="datenbank5"
-
-## Datenbank von MariaDB (6 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_6="datenbank6"
-
-## Namen der Docker von MariaDB dumps
-DockerName_dumps_1="Docker1"
-DockerName_dumps_2="Docker2"
-DockerName_dumps_3="Docker3"
-DockerName_dumps_4="Docker4"
-DockerName_dumps_5="Docker5"
-DockerName_dumps_6="Docker6"
-DockerName_dumps_mariadb="mariadb"
-
 
 ## Quellen-Pfade - Skript (ANPASSEN!) ##
 ## Wenn diese liste nicht reicht - ergaenzt diese! ##
@@ -204,6 +135,17 @@ then
 	exit 1
 fi
 
+# Fragen vor anfang
+echo "<font color='yellow'>Moechtest du dieses Skript wirklich ausfuehren?</font>"
+echo "<font color='yellow'>Dieses Srkipt spielt deine Daten vom Backupserver auf diesen Unraidserver.</font>"
+echo "<font color='yellow'>Hierbei koennen fehler auftreten. Trotzdem fortfahren? [y/n]</font>"
+if [ $1 == "y" ]
+  then
+    echo "<font color='yellow'>Fahre fort...</font>"
+  else
+    echo "<font color='yellow'>Breche ab...</font>"
+    exit 1
+fi
 
 # Backup-Server starten
 echo "<font color='blue'>Backup Server wird gestartet...</font>"
@@ -595,7 +537,7 @@ echo "<font color='blue'>Dies kann laenger dauern...</font>"
 
 # rsync DockerName1
 echo "<font color='blue'>rsync von "${DockerName1}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName1}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName1}" "${hauptPfadAppData}"
 echo
 
 # warten 12
@@ -603,7 +545,7 @@ sleep 5
 
 # rsync DockerName2
 echo "<font color='blue'>rsync von "${DockerName2}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName2}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName2}" "${hauptPfadAppData}"
 echo
 
 # warten 13
@@ -611,7 +553,7 @@ sleep 5
 
 # rsync DockerName3
 echo "<font color='blue'>rsync von "${DockerName3}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName3}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName3}" "${hauptPfadAppData}"
 echo
 
 # warten 14
@@ -619,7 +561,7 @@ sleep 5
 
 # rsync DockerName4
 echo "<font color='blue'>rsync von "${DockerName4}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName4}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName4}" "${hauptPfadAppData}"
 echo
 
 # warten 15
@@ -627,7 +569,7 @@ sleep 5
 
 # rsync DockerName5
 echo "<font color='blue'>rsync von "${DockerName5}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName5}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName5}" "${hauptPfadAppData}"
 echo
 
 # warten 16
@@ -635,7 +577,7 @@ sleep 5
 
 # rsync DockerName6
 echo "<font color='blue'>rsync von "${DockerName6}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName6}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName6}" "${hauptPfadAppData}"
 echo
 
 # warten 17
@@ -643,7 +585,7 @@ sleep 5
 
 # rsync DockerName7
 echo "<font color='blue'>rsync von "${DockerName7}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName7}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName7}" "${hauptPfadAppData}"
 echo
 
 # warten 18
@@ -651,7 +593,7 @@ sleep 5
 
 # rsync DockerName8
 echo "<font color='blue'>rsync von "${DockerName8}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName8}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName8}" "${hauptPfadAppData}"
 echo
 
 # warten 19
@@ -659,7 +601,7 @@ sleep 5
 
 # rsync DockerNameDatenbank
 echo "<font color='blue'>rsync von "${DockerName9}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName9}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName9}" "${hauptPfadAppData}"
 echo
 
 # warten 20
@@ -667,7 +609,7 @@ sleep 5
 
 # rsync DockerName10
 echo "<font color='blue'>rsync von "${DockerName10}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName10}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName10}" "${hauptPfadAppData}"
 echo
 
 # warten 21
@@ -675,7 +617,7 @@ sleep 5
 
 # rsync DockerName11
 echo "<font color='blue'>rsync von "${DockerName11}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName11}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName11}" "${hauptPfadAppData}"
 echo
 
 # warten 22
@@ -683,7 +625,7 @@ sleep 5
 
 # rsync DockerName12
 echo "<font color='blue'>rsync von "${DockerName12}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}" "${hauptPfadAppData}/${DockerName12}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName12}" "${hauptPfadAppData}"
 echo
 
 # warten 23
@@ -693,7 +635,7 @@ sleep 5
 
 # rsync Share1Name
 echo "<font color='blue'>rsync von "${Share1Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share1Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share1Name}" "${hauptPfadshare}"
 echo
 
 # warten 24
@@ -701,7 +643,7 @@ sleep 5
 
 # rsync Share2Name
 echo "<font color='blue'>rsync von "${Share2Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share2Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share2Name}" "${hauptPfadshare}"
 echo
 
 # warten 25
@@ -709,7 +651,7 @@ sleep 5
 
 # rsync Share3Name
 echo "<font color='blue'>rsync von "${Share3Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share3Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share3Name}" "${hauptPfadshare}"
 echo
 
 # warten 26
@@ -717,7 +659,7 @@ sleep 5
 
 # rsync Share4Name
 echo "<font color='blue'>rsync von "${Share4Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share4Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share4Name}" "${hauptPfadshare}"
 echo
 
 # warten 27
@@ -725,7 +667,7 @@ sleep 5
 
 # rsync Share5Name
 echo "<font color='blue'>rsync von "${Share5Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share5Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share5Name}" "${hauptPfadshare}"
 echo
 
 # warten 28
@@ -733,7 +675,7 @@ sleep 5
 
 # rsync Share6Name
 echo "<font color='blue'>rsync von "${Share6Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share6Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share6Name}" "${hauptPfadshare}"
 echo
 
 # warten 29
@@ -741,7 +683,7 @@ sleep 5
 
 # rsync Share7Name
 echo "<font color='blue'>rsync von "${Share7Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share7Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share7Name}" "${hauptPfadshare}"
 echo
 
 # warten 30
@@ -749,7 +691,7 @@ sleep 5
 
 # rsync Share8Name
 echo "<font color='blue'>rsync von "${Share8Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share8Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share8Name}" "${hauptPfadshare}"
 echo
 
 # warten 31
@@ -757,7 +699,7 @@ sleep 5
 
 # rsync Share9Name
 echo "<font color='blue'>rsync von "${Share9Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share9Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share9Name}" "${hauptPfadshare}"
 echo
 
 # warten 32
@@ -765,7 +707,7 @@ sleep 5
 
 # rsync Share10Name
 echo "<font color='blue'>rsync von "${Share10Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share10Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share10Name}" "${hauptPfadshare}"
 echo
 
 # warten 33
@@ -773,7 +715,7 @@ sleep 5
 
 # rsync Share11Name
 echo "<font color='blue'>rsync von "${Share11Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share11Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share11Name}" "${hauptPfadshare}"
 echo
 
 # warten 34
@@ -781,7 +723,7 @@ sleep 5
 
 # rsync Share12Name
 echo "<font color='blue'>rsync von "${Share12Name}"...</font>"
-sudo rsync --ignore-existing -az "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}" "${hauptPfadshare}/${Share12Name}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share12Name}" "${hauptPfadshare}"
 echo
 
 # warten 35
@@ -1098,101 +1040,6 @@ docker start "${DockerName1}"
 # warten 47
 sleep 5
 
-### MariaDB dumps-skript ###
-echo
-echo
-echo "<font color='blue'>Starte MariaDB dumps...</font>"
-echo
-
-## Ausgabe: Skript startet Dump 1 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_1}" Datenbank...</font>"
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_1}" < "${mariadb_pfad_dump_datenbank_1}"/${latestfile1}
-
-## Bestaetigen Dump 1 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-
-## Warten Dump 1 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-## Ausgabe: Skript startet Dump 2 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_2}" Datenbank...</font>"
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_2}" < "${mariadb_pfad_dump_datenbank_2}"/${latestfile2}
-
-## Bestaetigen Dump 2 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-echo 
-
-## Warten Dump 2 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-## Ausgabe: Skript startet Dump 3 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_3}" Datenbank...</font>"
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_3}" < "${mariadb_pfad_dump_datenbank_3}"/${latestfile3}
-
-## Bestaetigen Dump 3 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-echo 
-
-## Warten Dump 3 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-## Ausgabe: Skript startet Dump 4 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_4}" Datenbank...</font>"
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_4}" < "${mariadb_pfad_dump_datenbank_4}"/${latestfile4}
-
-## Bestaetigen Dump 4 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-echo
-
-## Warten Dump 4 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-## Ausgabe: Skript startet Dump 5 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_5}" Datenbank...</font>"
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_5}" < "${mariadb_pfad_dump_datenbank_5}"/${latestfile5}
-
-## Bestaetigen Dump 5 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-echo 
-
-## Warten Dump 5 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-## Ausgabe: Skript startet Dump 6 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_6}" Datenbank...</font>"
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_6}" < "${mariadb_pfad_dump_datenbank_6}"/${latestfile6}
-
-## Bestaetigen Dump 6 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-echo 
-
-## Warten Dump 6 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-echo
-## rsync datenbank ##
-echo "<font color='blue'>Datenbank rsync wird durchgeführt...</font>"
-rsync -aX --delete-during "${db_verzeichnis}" "${db_config_path}"
-errorecho 
-echo 
-
-## Abschließen mariadb dumps ##
-echo "<font color='green'>Die MariaDB dumps wurden zurueckgespielt.</font>"
-echo "<font color='orange'>Status der Datenbank muss seperat geprueft werden!</font>"
-## Beenden ##
-
 # Ordnung schaffen
 echo
 echo
@@ -1201,10 +1048,10 @@ echo
 if [ -d $hauptPfadAppData ] && [ -d $hauptPfadshare ]
   then
     /usr/local/emhttp/webGui/scripts/notify -i normal -s "Restore abgeschlossen." -d "Restore erfolgreich geschrieben."
-    echo "<font color='green'>Skript erfolgreich abgeschlossen.</font>"
+    echo "<font color='green'>Restore erfolgreich abgeschlossen.</font>"
   else
-    /usr/local/emhttp/webGui/scripts/notify -i alert -s "Backup fehlgeschlagen." -d "Restore konnte nicht geschrieben werden."
-    echo "<font color='red'>Skript fehlgeschlagen.</font>"
+    /usr/local/emhttp/webGui/scripts/notify -i alert -s "Restore fehlgeschlagen." -d "Restore konnte nicht geschrieben werden."
+    echo "<font color='red'>Restore fehlgeschlagen.</font>"
 fi
 echo
 
@@ -1230,3 +1077,4 @@ fi
 
 # ENDE
 echo "<font color='black'>Skirpt wurde abgeschlossen.</font>"
+echo "<font color='orange'>Bitte ueberpruefe den Status deiner Dienste von Hand!</font>"
