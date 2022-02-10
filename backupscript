@@ -8,11 +8,12 @@
 # Fuer MariaDB user gibt es auch ein Backup der Datenbanken
 # Dieses Skript kann nur fuer Docker umgebungen verwendet werden, die das Backup auf einen Proxmox server schreiben.
 # Erstellt von Easy Tec (youtube.com/EasyTec100)
-# Dieses Skript gibts hier: https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
+# Anleitung (German): https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
+# Script Language: German
 #
 
 #
-# Version 1.2.7
+# Version 1.2.8
 # Version BETA 
 #
 #
@@ -41,10 +42,10 @@ rsync_user="rsyncuser"
 # Dieser abschnitt muss auskommentiert werden, wenn keine Dumps ausgeführt werden sollen!!
 # Alle Nummern muessen zu der gleichen Datenbank gehoehren!
 
-## Funktion für error messages ##
+## Funktion fuer error messages ##
 errorecho() { cat <<< "$@" 1>&2; }
 
-## Passwort für MariaDB (SiChErEsPaSsWoRt)
+## Passwort fuer MariaDB (SiChErEsPaSsWoRt)
 mariadbPassWD="SiChErEsPaSsWoRt"
 
 ## MariaDB config path (standard-pfad)
