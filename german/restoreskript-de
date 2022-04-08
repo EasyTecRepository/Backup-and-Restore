@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Bash skript fuer eine rsync uebertragung der (externen backup-) Proxmox Daten auf einen internen Unraid-server 
+# Bash skript fuer eine rsync uebertragung der (externen backup-) Proxmox Daten auf einen internen Unraid-server
 #
 # Enthaelt Variablen und eine Message in Unraid.
 # Dieses Skript ist fuer eine rsync uebertragung der (externen backup-) Proxmox daten auf einen externen Unraid-server geschrieben worden.
