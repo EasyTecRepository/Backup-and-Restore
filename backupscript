@@ -1,14 +1,12 @@
 #!/bin/bash
 #
 # Bash skript fuer eine rsync uebertragung der Unraid Daten auf einen externen Backup-server (Proxmox) 
-# + mit einer MariaDB-sicherung
-#
+# Mit Cache-Ordner 
 # Enthaelt Variablen und eine Message in Unraid.
 # Dieses Skript ist fuer eine rsync uebertragung der Unraid daten auf einen externen Backup-server geschrieben worden.
-# Fuer MariaDB user gibt es auch ein Backup der Datenbanken
 # Dieses Skript kann nur fuer Docker umgebungen verwendet werden, die das Backup auf einen Proxmox server schreiben.
 # Erstellt von Easy Tec (youtube.com/EasyTec100)
-# Anleitung (German): https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/ (alter Link!)
+# Anleitung (German): https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
 # Script Language: German
 #
 
@@ -36,70 +34,6 @@ backupServerZielPfad2="Unraid-Backups/Shares"
 # RSYNC user (Standard = rsyncuser)
 rsync_user="rsyncuser"
 
-
-### Variablen - MariaDB dumps (ANPASSEN!) ###
-### Wenn mehr / weniger Variablen benoetigt werden, hinzufuegen / auskommentieren. (auch im Skript) ###
-# Dieser abschnitt muss auskommentiert werden, wenn keine Dumps ausgeführt werden sollen!!
-# Alle Nummern muessen zu der gleichen Datenbank gehoehren!
-
-## Funktion fuer error messages ##
-errorecho() { cat <<< "$@" 1>&2; }
-
-## Passwort fuer MariaDB (SiChErEsPaSsWoRt)
-mariadbPassWD="SiChErEsPaSsWoRt"
-
-## MariaDB config path (standard-pfad)
-db_config_path="mnt/user/mariadb_backups/MariaDB/config"
-
-## MariaDB verzeichnis path (Standard-pfad)
-db_verzeichnis="mnt/user/appdata/mariadb"
-
-## Pfad fuer MariaDB dump 1 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_1="/mnt/user/mariadb_backups/dump/datenbank1"
-
-## Pfad fuer MariaDB dump 2 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_2="/mnt/user/mariadb_backups/dump/datenbank2"
-
-## Pfad fuer MariaDB dump 3 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_3="/mnt/user/mariadb_backups/dump/datenbank3"
-
-## Pfad fuer MariaDB dump 4 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_4="/mnt/user/mariadb_backups/dump/datenbank4"
-
-## Pfad fuer MariaDB dump 5 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_5="/mnt/user/mariadb_backups/dump/datenbank5"
-
-## Pfad fuer MariaDB dump 6 (am ende KEIN "/"! \ beispiel-pfad!! Bitte anpassen!!)
-mariadb_pfad_dump_datenbank_6="/mnt/user/mariadb_backups/dump/datenbank6"
-
-## Datenbank von MariaDB (1 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_1="datenbank1"
-
-## Datenbank von MariaDB (2 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_2="datenbank2"
-
-## Datenbank von MariaDB (3 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_3="datenbank3"
-
-## Datenbank von MariaDB (4 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_4="datenbank4"
-
-## Datenbank von MariaDB (5 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_5="datenbank5"
-
-## Datenbank von MariaDB (6 Datenbank \ Datenbank = beispiel)
-mariadb_dumps_datenbank_6="datenbank6"
-
-## Namen der Docker von MariaDB dumps
-DockerName_dumps_1="docker1"
-DockerName_dumps_2="docker2"
-DockerName_dumps_3="docker3"
-DockerName_dumps_4="docker4"
-DockerName_dumps_5="docker5"
-DockerName_dumps_6="docker6"
-DockerName_dumps_mariadb="docker_mariadb"
-
-
 ## Quellen-Pfade - Skript (ANPASSEN!) ##
 ## Wenn diese liste nicht reicht - ergaenzt diese! ##
 ## Zu viele - macht ein '#' davor! ##
@@ -107,7 +41,12 @@ DockerName_dumps_mariadb="docker_mariadb"
 # Standard-Pfad AppData(vor-pfad)
 hauptPfadAppData="/mnt/user/appdata"
 
-## Docker-namen - Bitte in reihenfolge eingeben, in der sie gestoppt werden sollen ##
+# Standard-Pfad cache(vor-pfad)
+# Wenn cache eingerichtet ist, MUSS dieser Pfad ebenfalls ein Backup erhalten.
+# Im Cache werden wichtige Daten der Docker gespeichert. Ohne diese könnte der Docker nicht laufen!
+hauptPfadCache="/mnt/cache"
+
+## Docker-namen ##
 ## Am besten Datenbank immer am Schluss ##
 
 # Name des DockerName1
@@ -149,7 +88,10 @@ DockerName12="docker12"
 
 ## Start/Stopp Container steuerung Docker ##
 ## Diese Variablen sind fuer die Dockernamen 
-## Diese Namen koennen auch andere als der Pfad (selbststaendig oben angegeben) sein
+## Diese Namen koennen auch andere als der Pfad (selbststaendig oben angegeben) sein!
+## Bitte in folgender Reihenfolge angeben:  Als erstes Starten > Als letztes Starten
+## Beispiel: ContainerName1 wird zuerst GESTOPPT und als letztes GESTARTET
+## TIPP: Datenbank IMMER als LETZTES angeben! (So wird diese als letztes gestoppt und als erstes gestartet)
 
 # Name des ContainerName1
 ContainerName1="Container1"
@@ -242,6 +184,18 @@ fi
 
 # Pruefe Quellen (message)
 echo "<font color='blue'>Pruefe ob Quellen existieren...</font>"
+
+# hauptPfadCache
+if [ -d "${hauptPfadCache}" ]
+  then
+    echo "<font color='green'>OK</font>"
+  else
+    echo "<font color='red'>ERROR: Vezeichnis von "${hauptPfadCache}" existiert nicht! Breche ab...</font>"
+    echo "<font color='yellow'>Nutzt du auf Unraid einen cache? Wenn nicht, ist dies das falsche Skript!</font>"
+     exit 1
+fi
+
+echo 
 
 # DockerName1
 if [ -d "${hauptPfadAppData}/${DockerName1}" ]
@@ -537,95 +491,6 @@ else
  fi
 
 
-### MariaDB dumps-skript ###
-echo
-echo
-echo "<font color='blue'>Starte MariaDB dumps...</font>"
-echo
-
-## Ausgabe: Skript startet Dump 1 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_1}" Datenbank...</font>"
-touch "${mariadb_pfad_dump_user_1}"/${currentDate}_dump.sql
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_1}" > "${mariadb_pfad_dump_datenbank_1}"/${currentDate}_dump.sql
-
-## Bestaetigen Dump 1 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-
-## Warten Dump 1 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-## Ausgabe: Skript startet Dump 2 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_2}" Datenbank...</font>"
-touch "${mariadb_pfad_dump_user_2}"/${currentDate}_dump.sql
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_2}" > "${mariadb_pfad_dump_datenbank_2}"/${currentDate}_dump.sql
-
-## Bestaetigen Dump 2 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-echo 
-
-## Warten Dump 2 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-## Ausgabe: Skript startet Dump 3 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_3}" Datenbank...</font>"
-touch "${mariadb_pfad_dump_user_3}"/${currentDate}_dump.sql
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_3}" > "${mariadb_pfad_dump_datenbank_3}"/${currentDate}_dump.sql
-
-## Bestaetigen Dump 3 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-echo 
-
-## Warten Dump 3 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-## Ausgabe: Skript startet Dump 4 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_4}" Datenbank...</font>"
-touch "${mariadb_pfad_dump_user_4}"/${currentDate}_dump.sql
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_4}" > "${mariadb_pfad_dump_datenbank_4}"/${currentDate}_dump.sql
-
-## Bestaetigen Dump 4 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-echo
-
-## Warten Dump 4 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-## Ausgabe: Skript startet Dump 5 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_5}" Datenbank...</font>"
-touch "${mariadb_pfad_dump_user_5}"/${currentDate}_dump.sql
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_5}" > "${mariadb_pfad_dump_datenbank_5}"/${currentDate}_dump.sql
-
-## Bestaetigen Dump 5 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-echo 
-
-## Warten Dump 5 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
-## Ausgabe: Skript startet Dump 6 ##
-echo "<font color='blue'>backup der "${DockerName_dumps_6}" Datenbank...</font>"
-touch "${mariadb_pfad_dump_user_6}"/${currentDate}_dump.sql
-docker exec "${DockerName_dumps_mariadb}" /usr/bin/mysqldump --user=root --password=${mariadbPassWD} "${mariadb_dumps_datenbank_6}" > "${mariadb_pfad_dump_datenbank_6}"/${currentDate}_dump.sql
-
-## Bestaetigen Dump 6 ##
-echo "<font color='green'>OK</font>"
-errorecho "<font color='green'></font>"
-echo 
-
-## Warten Dump 6 ##
-echo "<font color='black'>warte 5 sekunden...</font>"
-sleep 5
-
 ## ordnung schaffen ##
 echo
 echo
@@ -719,76 +584,6 @@ docker stop "${ContainerName12}"
 # warten 11
 sleep 5
 
-echo
-## rsync datenbank ##
-echo "<font color='blue'>Datenbank rsync wird durchgeführt...</font>"
-rsync -aX --delete-during "${db_verzeichnis}" "${db_config_path}"
-errorecho 
-echo 
-
-
-## Test Dump 1 ##
-if [ -f "${mariadb_pfad_dump_user_1}"/${currentDate}_dump.sql ]
-  then
-    echo "<font color='green'>Das "${DockerName1}" Backup wurde erfolgreich im angegebenen share abgelegt.</font>"
-  else
-    echo "<font color='red'>ERROR: Irgendetwas ist schiefgelaufen. Das Backup befindet sich nicht im angegebenen Pfad!</font>"
-fi
-
-echo 
-
-## Test Dump 2 ##
-if [ -f "${mariadb_pfad_dump_user_2}"/${currentDate}_dump.sql ]
-  then
-    echo "<font color='green'>Das "${DockerName2}" Backup wurde erfolgreich im angegebenen share abgelegt.</font>"
-  else
-    echo "<font color='red'>ERROR: Irgendetwas ist schiefgelaufen. Das Backup befindet sich nicht im angegebenen Pfad!</font>"
-fi
-
-echo 
-
-## Test Dump 3 ##
-if [ -f "${mariadb_pfad_dump_user_3}"/${currentDate}_dump.sql ]
-  then
-    echo "<font color='green'>Das "${DockerName3}" Backup wurde erfolgreich im angegebenen share abgelegt.</font>"
-  else
-    echo "<font color='red'>ERROR: Irgendetwas ist schiefgelaufen. Das Backup befindet sich nicht im angegebenen Pfad!</font>"
-fi
-
-echo 
-
-## Test Dump 4 ##
-if [ -f "${mariadb_pfad_dump_user_4}"/${currentDate}_dump.sql ]
-  then
-    echo "<font color='green'>Das "${DockerName4}" Backup wurde erfolgreich im angegebenen share abgelegt.</font>"
-  else
-    echo "<font color='red'>ERROR: Irgendetwas ist schiefgelaufen. Das Backup befindet sich nicht im angegebenen Pfad!</font>"
-fi
-
-echo 
-
-## Test Dump 5 ##
-if [ -f "${mariadb_pfad_dump_user_5}"/${currentDate}_dump.sql ]
-  then
-    echo "<font color='green'>Das "${DockerName5}" Backup wurde erfolgreich im angegebenen share abgelegt.</font>"
-  else
-    echo "<font color='red'>ERROR: Irgendetwas ist schiefgelaufen. Das Backup befindet sich nicht im angegebenen Pfad!</font>"
-fi
-
-echo 
-
-## Test Dump 6 ##
-if [ -f "${mariadb_pfad_dump_user_6}"/${currentDate}_dump.sql ]
-  then
-    echo "<font color='green'>Das "${DockerName6}" Backup wurde erfolgreich im angegebenen share abgelegt.</font>"
-  else
-    echo "<font color='red'>ERROR: Irgendetwas ist schiefgelaufen. Das Backup befindet sich nicht im angegebenen Pfad!</font>"
-fi
-
-echo 
-
-## Abschließen mariadb dumps ##
-echo "<font color='green'>Die MariaDB dumps wurden gespeichert.</font>"
 
 # Ordnung schaffen
 echo
@@ -895,14 +690,20 @@ echo
 # warten 23
 sleep 5
 
+# rsync hauptPfadCache
+echo "<font color='blue'>rsync von "${hauptPfadCache}"...</font>"
+sudo rsync --ignore-existing -az "${hauptPfadCache}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+echo
 
+# warten 24
+sleep 5
 
 # rsync Share1Name
 echo "<font color='blue'>rsync von "${Share1Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share1Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 24
+# warten 25
 sleep 5
 
 # rsync Share2Name
@@ -910,7 +711,7 @@ echo "<font color='blue'>rsync von "${Share2Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share2Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 25
+# warten 26
 sleep 5
 
 # rsync Share3Name
@@ -918,7 +719,7 @@ echo "<font color='blue'>rsync von "${Share3Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share3Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 26
+# warten 27
 sleep 5
 
 # rsync Share4Name
@@ -926,7 +727,7 @@ echo "<font color='blue'>rsync von "${Share4Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share4Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 27
+# warten 28
 sleep 5
 
 # rsync Share5Name
@@ -934,7 +735,7 @@ echo "<font color='blue'>rsync von "${Share5Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share5Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 28
+# warten 29
 sleep 5
 
 # rsync Share6Name
@@ -942,7 +743,7 @@ echo "<font color='blue'>rsync von "${Share6Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share6Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 29
+# warten 30
 sleep 5
 
 # rsync Share7Name
@@ -950,7 +751,7 @@ echo "<font color='blue'>rsync von "${Share7Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share7Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 30
+# warten 31
 sleep 5
 
 # rsync Share8Name
@@ -958,7 +759,7 @@ echo "<font color='blue'>rsync von "${Share8Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share8Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 31
+# warten 32
 sleep 5
 
 # rsync Share9Name
@@ -966,7 +767,7 @@ echo "<font color='blue'>rsync von "${Share9Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share9Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 32
+# warten 33
 sleep 5
 
 # rsync Share10Name
@@ -974,7 +775,7 @@ echo "<font color='blue'>rsync von "${Share10Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share10Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 33
+# warten 34
 sleep 5
 
 # rsync Share11Name
@@ -982,7 +783,7 @@ echo "<font color='blue'>rsync von "${Share11Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share11Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 34
+# warten 35
 sleep 5
 
 # rsync Share12Name
@@ -990,7 +791,7 @@ echo "<font color='blue'>rsync von "${Share12Name}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share12Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
 echo
 
-# warten 35
+# warten 36
 sleep 5
 
 
@@ -1224,84 +1025,84 @@ echo "<font color='black'>Starte Docker...</font>"
 echo "<font color='blue'>Starte "${ContainerName12}"...</font>"
 docker start "${ContainerName12}"
 
-# warten 36
+# warten 37
 sleep 5
 
 # ContainerName11
 echo "<font color='blue'>Starte "${ContainerName11}"...</font>"
 docker start "${ContainerName11}"
 
-# warten 37
+# warten 38
 sleep 5
 
 # ContainerName10
 echo "<font color='blue'>Starte "${ContainerName10}"...</font>"
 docker start "${ContainerName10}"
 
-# warten 38
+# warten 39
 sleep 5
 
 # ContainerName9
 echo "<font color='blue'>Starte "${ContainerName9}"...</font>"
 docker start "${ContainerName9}"
 
-# warten 39
+# warten 40
 sleep 5
 
 # ContainerName8
 echo "<font color='blue'>Starte "${ContainerName8}"...</font>"
 docker start "${ContainerName8}"
 
-# warten 40
+# warten 41
 sleep 5
 
 # ContainerName7
 echo "<font color='blue'>Starte "${ContainerName7}"...</font>"
 docker start "${ContainerName7}"
 
-# warten 41
+# warten 42
 sleep 5
 
 # ContainerName6
 echo "<font color='blue'>Starte "${ContainerName6}"...</font>"
 docker start "${ContainerName6}"
 
-# warten 42
+# warten 43
 sleep 5
 
 # ContainerName5
 echo "<font color='blue'>Starte "${ContainerName5}"...</font>"
 docker start "${ContainerName5}"
 
-# warten 43
+# warten 44
 sleep 5
 
 # ContainerName4
 echo "<font color='blue'>Starte "${ContainerName4}"...</font>"
 docker start "${ContainerName4}"
 
-# warten 44
+# warten 45
 sleep 5
 
 # ContainerName3
 echo "<font color='blue'>Starte "${ContainerName3}"...</font>"
 docker start "${ContainerName3}"
 
-# warten 45
+# warten 46
 sleep 5
 
 # ContainerName2
 echo "<font color='blue'>Starte "${ContainerName2}"...</font>"
 docker start "${ContainerName2}"
 
-# warten 46
+# warten 47
 sleep 5
 
 # ContainerName1
 echo "<font color='blue'>Starte "${ContainerName1}"...</font>"
 docker start "${ContainerName1}"
 
-# warten 47
+# warten 48
 sleep 5
 
 
