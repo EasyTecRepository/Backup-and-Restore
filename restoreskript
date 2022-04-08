@@ -4,14 +4,12 @@
 #
 # Enthaelt Variablen und eine Message in Unraid.
 # Dieses Skript ist fuer eine rsync uebertragung der (externen backup-) Proxmox daten auf einen externen Unraid-server geschrieben worden.
-# Fuer MariaDB user gibt es KEINE FUNKTION für ein Restore der Datenbanken (PRUEFE GITHUB NACH EINEM SOLCHEN SKRIPT)
 # Dieses Skript kann nur fuer Docker umgebungen verwendet werden, die das Backup auf einen Proxmox server schreiben.
 # Erstellt von Easy Tec (youtube.com/EasyTec100)
 # Anleitung (German): https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
 # Dieses Skript muss von Hand ausgeführt werden!
 # Script Language: German
 #
-
 
 #
 # Version 1.0.8
@@ -37,6 +35,7 @@ backupServerZielPfad2="Unraid-Backups/Shares"
 
 # RSYNC user (Standard = rsyncuser)
 rsync_user="rsyncuser"
+
 
 ## Quellen-Pfade - Skript (ANPASSEN!) ##
 ## Wenn diese liste nicht reicht - ergaenzt diese! ##
@@ -735,7 +734,7 @@ echo "<font color='blue'>Pruefe ob Daten im Ziel sind...</font>"
 
 
 # DockerName1
-if [ test -d "${backupServerZielPfad}/${DockerName1}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName1}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -744,7 +743,7 @@ fi
 echo 
 
 # DockerName2
-if [ test -d "${backupServerZielPfad}/${DockerName2}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName2}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -753,7 +752,7 @@ fi
 echo 
 
 # DockerName3
-if [ test -d "${backupServerZielPfad}/${DockerName3}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName3}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -762,7 +761,7 @@ fi
 echo 
 
 # DockerName4
-if [ test -d "${backupServerZielPfad}/${DockerName4}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName4}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -771,7 +770,7 @@ fi
 echo 
 
 # DockerName5
-if [ test -d "${backupServerZielPfad}/${DockerName5}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName5}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -780,7 +779,7 @@ fi
 echo 
 
 # DockerName6
-if [ test -d "${backupServerZielPfad}/${DockerName6}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName6}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -789,7 +788,7 @@ fi
 echo 
 
 # DockerName7
-if [ test -d "${backupServerZielPfad}/${DockerName7}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName7}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -798,7 +797,7 @@ fi
 echo  
 
 # DockerName8
-if [ test -d "${backupServerZielPfad}/${DockerName8}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName8}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -808,7 +807,7 @@ echo
 
 
 # DockerName9
-if [ test -d "${backupServerZielPfad}/${DockerName9}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName9}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -817,7 +816,7 @@ fi
 echo 
 
 # DockerName10
-if [ test -d "${backupServerZielPfad}/${DockerName10}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName10}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -826,7 +825,7 @@ fi
 echo 
 
 # DockerName11
-if [ test -d "${backupServerZielPfad}/${DockerName11}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName11}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -835,7 +834,7 @@ fi
 echo 
 
 # DockerName12
-if [ test -d "${backupServerZielPfad}/${DockerName12}" ]
+if [ test -d "${hauptPfadAppData}/${DockerName12}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -845,7 +844,7 @@ echo
 
 
 # Share1
-if [ test -d "${backupServerZielPfad2}/${Share1Name}" ]
+if [ test -d "${hauptPfadshare}/${Share1Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -854,7 +853,7 @@ fi
 echo
 
 # Share2
-if [ test -d "${backupServerZielPfad2}/${Share2Name}" ]
+if [ test -d "${hauptPfadshare}/${Share2Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -863,7 +862,7 @@ fi
 echo
 
 # Share3
-if [ test -d "${backupServerZielPfad2}/${Share3Name}" ]
+if [ test -d "${hauptPfadshare}/${Share3Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -872,7 +871,7 @@ fi
 echo
 
 # Share4
-if [ test -d "${backupServerZielPfad2}/${Share4Name}" ]
+if [ test -d "${hauptPfadshare}/${Share4Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -881,7 +880,7 @@ fi
 echo
 
 # Share5
-if [ test -d "${backupServerZielPfad2}/${Share5Name}" ]
+if [ test -d "${hauptPfadshare}/${Share5Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -890,7 +889,7 @@ fi
 echo
 
 # Share6
-if [ test -d "${backupServerZielPfad2}/${Share6Name}" ]
+if [ test -d "${hauptPfadshare}/${Share6Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -899,7 +898,7 @@ fi
 echo
 
 # Share7
-if [ test -d "${backupServerZielPfad2}/${Share7Name}" ]
+if [ test -d "${hauptPfadshare}/${Share7Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -908,7 +907,7 @@ fi
 echo
 
 # Share8
-if [ test -d "${backupServerZielPfad2}/${Share8Name}" ]
+if [ test -d "${hauptPfadshare}/${Share8Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -917,7 +916,7 @@ fi
 echo
 
 # Share9
-if [ test -d "${backupServerZielPfad2}/${Share9Name}" ]
+if [ test -d "${hauptPfadshare}/${Share9Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -926,7 +925,7 @@ fi
 echo
 
 # Share10
-if [ test -d "${backupServerZielPfad2}/${Share10Name}" ]
+if [ test -d "${hauptPfadshare}/${Share10Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -935,7 +934,7 @@ fi
 echo
 
 # Share11
-if [ test -d "${backupServerZielPfad2}/${Share11Name}" ]
+if [ test -d "${hauptPfadshare}/${Share11Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -944,7 +943,7 @@ fi
 echo
 
 # Share12
-if [ test -d "${backupServerZielPfad2}/${Share12Name}" ]
+if [ test -d "${hauptPfadshare}/${Share12Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -1077,4 +1076,3 @@ fi
 
 # ENDE
 echo "<font color='black'>Skirpt wurde abgeschlossen.</font>"
-echo "<font color='orange'>Bitte ueberpruefe den Status deiner Dienste von Hand!</font>"
