@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-# Bash skript fuer eine rsync uebertragung der Unraid Daten auf einen externen Backup-server (Proxmox)
+# Bash skript fuer eine rsync uebertragung der Unraid Daten auf einen externen Backup-server (Proxmox) 
 # Mit Cache-Ordner 
 # Enthaelt Variablen und eine Message in Unraid.
 # Dieses Skript ist fuer eine rsync uebertragung der Unraid daten auf einen externen Backup-server geschrieben worden.
 # Dieses Skript kann nur fuer Docker umgebungen verwendet werden, die das Backup auf einen Proxmox server schreiben.
 # Erstellt von Easy Tec (youtube.com/EasyTec100)
-# Anleitung (German): https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
+# Anleitung (German): https://easytec.tech/index.php/2022/04/08/backupskript-fuer-unraid-auf-proxmox/
 # Script Language: German
 #
 
