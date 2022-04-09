@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-# Bash script for an rsync transfer of the Unraid data to an external backup server (Proxmox)
+# Bash script for an rsync transfer of the Unraid data to an external backup server (Proxmox) 
 #
 # Contains variables and a message in Unraid.
 # This script is written for rsync transfer of Unraid data to an external backup server.
 # This script can only be used for docker environments that write the backup to a proxmox server.
 # Created by Easy Tec (youtube.com/EasyTec100)
-# Instructions (German): https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
+# Instructions (German): https://easytec.tech/index.php/2022/04/08/backupskript-fuer-unraid-auf-proxmox/
 # Script Language: English
 #
 
@@ -26,10 +26,10 @@ currentDate=$(date +"%Y%m%d_%H%M%S")
 backupServerIP="111.222.333.444.55"
 
 # backup-server path AppData(target) (WITHOUT "/" at the beginning and at the end)
-backupServerZielPfad="Unraid-Backups/AppData"
+backupServerTargetPath="Unraid-Backups/AppData"
 
 # backup-server path shares(target) (WITHOUT "/" at the beginning and at the end) 
-backupServerZielPfad2="Unraid-Backups/Shares"
+backupServerTargetPath2="Unraid-Backups/Shares"
 
 # RSYNC user (default = rsyncuser)
 rsync_user="rsyncuser"
@@ -39,7 +39,7 @@ rsync_user="rsyncuser"
 ## Too many - put a '#' in front of it! ##
 
 # default path AppData(pre-path)
-hauptPfadAppData="/mnt/user/appdata"
+mainPathAppData="/mnt/user/appdata"
 
 ## Docker names ##
 ## Best database always at the end ##
@@ -126,7 +126,7 @@ ContainerName12="Container12"
 
 
 # default path share (pre-path)
-hauptPfadshare="/mnt/user"
+mainPathShare="/mnt/user"
 
 # Name of the Shares 1
 Share1Name="share1"
@@ -181,7 +181,7 @@ fi
 echo "<font color='blue'>Check if sources exist...</font>"
 
 # DockerName1
-if [ -d "${hauptPfadAppData}/${DockerName1}" ]
+if [ -d "${mainPathAppData}/${DockerName1}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -192,7 +192,7 @@ fi
 echo 
 
 # DockerName2
-if [ -d "${hauptPfadAppData}/${DockerName2}" ]
+if [ -d "${mainPathAppData}/${DockerName2}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -203,7 +203,7 @@ fi
 echo 
 
 # DockerName3
-if [ -d "${hauptPfadAppData}/${DockerName3}" ]
+if [ -d "${mainPathAppData}/${DockerName3}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -214,7 +214,7 @@ fi
 echo 
 
 # DockerName4
-if [ -d "${hauptPfadAppData}/${DockerName4}" ]
+if [ -d "${mainPathAppData}/${DockerName4}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -225,7 +225,7 @@ fi
 echo 
 
 # DockerName5
-if [ -d "${hauptPfadAppData}/${DockerName5}" ]
+if [ -d "${mainPathAppData}/${DockerName5}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -236,7 +236,7 @@ fi
 echo 
 
 # DockerName6
-if [ -d "${hauptPfadAppData}/${DockerName6}" ]
+if [ -d "${mainPathAppData}/${DockerName6}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -247,7 +247,7 @@ fi
 echo 
 
 # DockerName7
-if [ -d "${hauptPfadAppData}/${DockerName7}" ]
+if [ -d "${mainPathAppData}/${DockerName7}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -258,7 +258,7 @@ fi
 echo 
 
 # DockerName8
-if [ -d "${hauptPfadAppData}/${DockerName8}" ]
+if [ -d "${mainPathAppData}/${DockerName8}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -268,8 +268,8 @@ fi
 
 echo 
 
-# DockerNameDatenbank
-if [ -d "${hauptPfadAppData}/${DockerName9}" ]
+# DockerName9
+if [ -d "${mainPathAppData}/${DockerName9}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -280,7 +280,7 @@ fi
 echo 
 
 # DockerName10
-if [ -d "${hauptPfadAppData}/${DockerName10}" ]
+if [ -d "${mainPathAppData}/${DockerName10}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -291,7 +291,7 @@ fi
 echo
 
 # DockerName11
-if [ -d "${hauptPfadAppData}/${DockerName11}" ]
+if [ -d "${mainPathAppData}/${DockerName11}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -301,8 +301,8 @@ fi
 
 echo
 
- DockerName12
-if [ -d "${hauptPfadAppData}/${DockerName12}" ]
+# DockerName12
+if [ -d "${mainPathAppData}/${DockerName12}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -315,7 +315,7 @@ echo
 
 
 # Share1Name
-if [ -d "${hauptPfadshare}/${Share1Name}" ]
+if [ -d "${mainPathShare}/${Share1Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -326,7 +326,7 @@ fi
 echo
 
 # Share2Name
-if [ -d "${hauptPfadshare}/${Share2Name}" ]
+if [ -d "${mainPathShare}/${Share2Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -337,7 +337,7 @@ fi
 echo
 
 # Share3Name
-if [ -d "${hauptPfadshare}/${Share3Name}" ]
+if [ -d "${mainPathShare}/${Share3Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -348,7 +348,7 @@ fi
 echo
 
 # Share4Name
-if [ -d "${hauptPfadshare}/${Share4Name}" ]
+if [ -d "${mainPathShare}/${Share4Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -359,7 +359,7 @@ fi
 echo
 
 # Share5Name
-if [ -d "${hauptPfadshare}/${Share5Name}" ]
+if [ -d "${mainPathShare}/${Share5Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -370,7 +370,7 @@ fi
 echo
 
 # Share6Name
-if [ -d "${hauptPfadshare}/${Share6Name}" ]
+if [ -d "${mainPathShare}/${Share6Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -381,7 +381,7 @@ fi
 echo
 
 # Share7Name
-if [ -d "${hauptPfadshare}/${Share7Name}" ]
+if [ -d "${mainPathShare}/${Share7Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -392,7 +392,7 @@ fi
 echo
 
 # Share8Name
-if [ -d "${hauptPfadshare}/${Share8Name}" ]
+if [ -d "${mainPathShare}/${Share8Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -403,7 +403,7 @@ fi
 echo
 
 # Share9Name
-if [ -d "${hauptPfadshare}/${Share9Name}" ]
+if [ -d "${mainPathShare}/${Share9Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -414,7 +414,7 @@ fi
 echo
 
 # Share10Name
-if [ -d "${hauptPfadshare}/${Share10Name}" ]
+if [ -d "${mainPathShare}/${Share10Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -425,7 +425,7 @@ fi
 echo
 
 # Share11Name
-if [ -d "${hauptPfadshare}/${Share11Name}" ]
+if [ -d "${mainPathShare}/${Share11Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -436,7 +436,7 @@ fi
 echo
 
 # Share12Name
-if [ -d "${hauptPfadshare}/${Share12Name}" ]
+if [ -d "${mainPathShare}/${Share12Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -579,7 +579,7 @@ echo "<font color='blue'>This may take longer...</font>"
 
 # rsync DockerName1
 echo "<font color='blue'>rsync of "${DockerName1}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName1}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName1}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 12
@@ -587,7 +587,7 @@ sleep 5
 
 # rsync DockerName2
 echo "<font color='blue'>rsyn of "${DockerName2}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName2}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName2}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 13
@@ -595,7 +595,7 @@ sleep 5
 
 # rsync DockerName3
 echo "<font color='blue'>rsync of "${DockerName3}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName3}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName3}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 14
@@ -603,7 +603,7 @@ sleep 5
 
 # rsync DockerName4
 echo "<font color='blue'>rsync of "${DockerName4}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName4}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName4}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 15
@@ -611,7 +611,7 @@ sleep 5
 
 # rsync DockerName5
 echo "<font color='blue'>rsync of "${DockerName5}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName5}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName5}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 16
@@ -619,7 +619,7 @@ sleep 5
 
 # rsync DockerName6
 echo "<font color='blue'>rsync of "${DockerName6}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName6}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName6}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 17
@@ -627,7 +627,7 @@ sleep 5
 
 # rsync DockerName7
 echo "<font color='blue'>rsync of "${DockerName7}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName7}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName7}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 18
@@ -635,15 +635,15 @@ sleep 5
 
 # rsync DockerName8
 echo "<font color='blue'>rsync of "${DockerName8}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName8}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName8}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 19
 sleep 5
 
-# rsync DockerNameDatenbank
+# rsync DockerName9
 echo "<font color='blue'>rsync of "${DockerName9}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName9}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName9}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 20
@@ -651,7 +651,7 @@ sleep 5
 
 # rsync DockerName10
 echo "<font color='blue'>rsync of "${DockerName10}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName10}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName10}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 21
@@ -659,7 +659,7 @@ sleep 5
 
 # rsync DockerName11
 echo "<font color='blue'>rsync of "${DockerName11}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName11}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName11}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 22
@@ -667,7 +667,7 @@ sleep 5
 
 # rsync DockerName12
 echo "<font color='blue'>rsync of "${DockerName12}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName12}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
+sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName12}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
 
 # wait 23
@@ -675,7 +675,7 @@ sleep 5
 
 # rsync Share1Name
 echo "<font color='blue'>rsync of "${Share1Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share1Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share1Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 24
@@ -683,7 +683,7 @@ sleep 5
 
 # rsync Share2Name
 echo "<font color='blue'>rsync of "${Share2Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share2Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share2Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 25
@@ -691,7 +691,7 @@ sleep 5
 
 # rsync Share3Name
 echo "<font color='blue'>rsync of "${Share3Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share3Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share3Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 26
@@ -699,7 +699,7 @@ sleep 5
 
 # rsync Share4Name
 echo "<font color='blue'>rsync of "${Share4Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share4Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share4Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 27
@@ -707,7 +707,7 @@ sleep 5
 
 # rsync Share5Name
 echo "<font color='blue'>rsync of "${Share5Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share5Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share5Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 28
@@ -715,7 +715,7 @@ sleep 5
 
 # rsync Share6Name
 echo "<font color='blue'>rsync of "${Share6Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share6Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share6Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 29
@@ -723,7 +723,7 @@ sleep 5
 
 # rsync Share7Name
 echo "<font color='blue'>rsync of "${Share7Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share7Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share7Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 30
@@ -731,7 +731,7 @@ sleep 5
 
 # rsync Share8Name
 echo "<font color='blue'>rsync of "${Share8Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share8Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share8Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 31
@@ -739,7 +739,7 @@ sleep 5
 
 # rsync Share9Name
 echo "<font color='blue'>rsync of "${Share9Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share9Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share9Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 32
@@ -747,7 +747,7 @@ sleep 5
 
 # rsync Share10Name
 echo "<font color='blue'>rsync of "${Share10Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share10Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share10Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 33
@@ -755,7 +755,7 @@ sleep 5
 
 # rsync Share11Name
 echo "<font color='blue'>rsync of "${Share11Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share11Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share11Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 34
@@ -763,7 +763,7 @@ sleep 5
 
 # rsync Share12Name
 echo "<font color='blue'>rsync of "${Share12Name}"...</font>"
-sudo rsync --ignore-existing -az "${hauptPfadshare}/${Share12Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}"
+sudo rsync --ignore-existing -az "${mainPathShare}/${Share12Name}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}"
 echo
 
 # wait 35
@@ -775,7 +775,7 @@ echo "<font color='blue'>Check if data is in the target...</font>"
 
 
 # DockerName1
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName1}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName1}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -784,7 +784,7 @@ fi
 echo 
 
 # DockerName2
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName2}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName2}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -793,7 +793,7 @@ fi
 echo 
 
 # DockerName3
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName3}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName3}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -802,7 +802,7 @@ fi
 echo 
 
 # DockerName4
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName4}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName4}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -811,7 +811,7 @@ fi
 echo 
 
 # DockerName5
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName5}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName5}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -820,7 +820,7 @@ fi
 echo 
 
 # DockerName6
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName6}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName6}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -829,7 +829,7 @@ fi
 echo 
 
 # DockerName7
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName7}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName7}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -838,7 +838,7 @@ fi
 echo  
 
 # DockerName8
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName8}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName8}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -848,7 +848,7 @@ echo
 
 
 # DockerName9
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName9}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName9}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -857,7 +857,7 @@ fi
 echo 
 
 # DockerName10
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName10}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName10}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -866,7 +866,7 @@ fi
 echo 
 
 # DockerName11
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName11}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName11}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -875,7 +875,7 @@ fi
 echo 
 
 # DockerName12
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad}/${DockerName12}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath}/${DockerName12}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -885,7 +885,7 @@ echo
 
 
 # Share1
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share1Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share1Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -894,7 +894,7 @@ fi
 echo
 
 # Share2
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share2Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share2Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -903,7 +903,7 @@ fi
 echo
 
 # Share3
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share3Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share3Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -912,7 +912,7 @@ fi
 echo
 
 # Share4
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share4Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share4Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -921,7 +921,7 @@ fi
 echo
 
 # Share5
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share5Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share5Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -930,7 +930,7 @@ fi
 echo
 
 # Share6
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share6Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share6Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -939,7 +939,7 @@ fi
 echo
 
 # Share7
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share7Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share7Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -948,7 +948,7 @@ fi
 echo
 
 # Share8
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share8Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share8Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -957,7 +957,7 @@ fi
 echo
 
 # Share9
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share9Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share9Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -966,7 +966,7 @@ fi
 echo
 
 # Share10
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share10Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share10Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -975,7 +975,7 @@ fi
 echo
 
 # Share11
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share11Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share11Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -984,7 +984,7 @@ fi
 echo
 
 # Share12
-if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerZielPfad2}/${Share12Name}" && echo exists` ]]
+if [[ `ssh "${rsync_user}"@"${backupServerIP}" test -d "${backupServerTargetPath2}/${Share12Name}" && echo exists` ]]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -1084,7 +1084,7 @@ sleep 5
 ## Finish ##
 
 # Close
-if ! ssh "${rsync_user}"@"${backupServerIP}" "ls /"${backupServerZielPfad}" >/dev/null 2>&1" && ! ssh "${rsync_user}"@"${backupServerIP}" "ls /"${backupServerZielPfad2}" >/dev/null 2>&1"
+if ! ssh "${rsync_user}"@"${backupServerIP}" "ls /"${backupServerTargetPath}" >/dev/null 2>&1" && ! ssh "${rsync_user}"@"${backupServerIP}" "ls /"${backupServerTargetPath2}" >/dev/null 2>&1"
   then
     /usr/local/emhttp/webGui/scripts/notify -i normal -s "Backup completed." -d "Backup successfully written to Proxmox."
     echo "<font color='green'>Script successfully completed.</font>"         
