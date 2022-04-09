@@ -6,7 +6,7 @@
 # This script is written for rsync transfer of (external backup) Proxmox data to an external Unraid server.
 # This script can only be used for Docker environments that write the backup to a Proxmox server.
 # Created by Easy Tec (youtube.com/EasyTec100)
-# Instructions (German): https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
+# Instructions (German): https://easytec.tech/index.php/2022/04/08/backupskript-fuer-unraid-auf-proxmox/
 # This script must be executed by hand!
 # Script Language: English
 #
@@ -28,10 +28,10 @@ currentDate=$(date +"%Y%m%d_%H%M%S")
 backupServerIP="111.222.333.444.55"
 
 # backup-server path AppData(target) (WITHOUT "/" at the beginning and at the end)
-backupServerZielPfad="Unraid-Backups/AppData"
+backupServerTargetPath="Unraid-Backups/AppData"
 
 # backup-server path shares(target) (WITHOUT "/" at the beginning and at the end) 
-backupServerZielPfad2="Unraid-Backups/Shares"
+backupServerTargetPath2="Unraid-Backups/Shares"
 
 # RSYNC user (default = rsyncuser)
 rsync_user="rsyncuser"
@@ -42,7 +42,7 @@ rsync_user="rsyncuser"
 ## Too many - put a '#' in front of it! ##
 
 # default path AppData(pre-path)
-hauptPfadAppData="/mnt/user/appdata"
+mainPathAppData="/mnt/user/appdata"
 
 ## Docker names - Please enter in the order in which they should be stopped ##
 ## Best database always at the end ##
@@ -85,7 +85,7 @@ DockerName12="docker12"
 
 
 # default path share (pre-path)
-hauptPfadshare="/mnt/user"
+mainPathShare="/mnt/user"
 
 # Name of the Shares 1
 Share1Name="Share1"
@@ -176,7 +176,7 @@ else
 echo "<font color='blue'>Check if sources exist...</font>"
 
 # DockerName1
-if [ -d "${backupServerZielPfad}/${DockerName1}" ]
+if [ -d "${backupServerTargetPath}/${DockerName1}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -187,7 +187,7 @@ fi
 echo 
 
 # DockerName2
-if [ -d "${backupServerZielPfad}/${DockerName2}" ]
+if [ -d "${backupServerTargetPath}/${DockerName2}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -198,7 +198,7 @@ fi
 echo 
 
 # DockerName3
-if [ -d "${backupServerZielPfad}/${DockerName3}" ]
+if [ -d "${backupServerTargetPath}/${DockerName3}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -209,7 +209,7 @@ fi
 echo 
 
 # DockerName4
-if [ -d "${backupServerZielPfad}/${DockerName4}" ]
+if [ -d "${backupServerTargetPath}/${DockerName4}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -220,7 +220,7 @@ fi
 echo 
 
 # DockerName5
-if [ -d "${backupServerZielPfad}/${DockerName5}" ]
+if [ -d "${backupServerTargetPath}/${DockerName5}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -231,7 +231,7 @@ fi
 echo 
 
 # DockerName6
-if [ -d "${backupServerZielPfad}/${DockerName6}" ]
+if [ -d "${backupServerTargetPath}/${DockerName6}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -242,7 +242,7 @@ fi
 echo 
 
 # DockerName7
-if [ -d "${backupServerZielPfad}/${DockerName7}" ]
+if [ -d "${backupServerTargetPath}/${DockerName7}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -253,7 +253,7 @@ fi
 echo 
 
 # DockerName8
-if [ -d "${backupServerZielPfad}/${DockerName8}" ]
+if [ -d "${backupServerTargetPath}/${DockerName8}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -264,7 +264,7 @@ fi
 echo 
 
 # DockerName9
-if [ -d "${backupServerZielPfad}/${DockerName9}" ]
+if [ -d "${backupServerTargetPath}/${DockerName9}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -275,7 +275,7 @@ fi
 echo 
 
 # DockerName10
-if [ -d "${backupServerZielPfad}/${DockerName10}" ]
+if [ -d "${backupServerTargetPath}/${DockerName10}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -286,7 +286,7 @@ fi
 echo
 
 # DockerName11
-if [ -d "${backupServerZielPfad}/${DockerName11}" ]
+if [ -d "${backupServerTargetPath}/${DockerName11}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -297,7 +297,7 @@ fi
 echo
 
 # DockerName12
-if [ -d "${backupServerZielPfad}/${DockerName12}" ]
+if [ -d "${backupServerTargetPath}/${DockerName12}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -310,7 +310,7 @@ echo
 
 
 # Share1Name
-if [ -d "${backupServerZielPfad2}/${Share1Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share1Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -321,7 +321,7 @@ fi
 echo
 
 # Share2Name
-if [ -d "${backupServerZielPfad2}/${Share2Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share2Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -332,7 +332,7 @@ fi
 echo
 
 # Share3Name
-if [ -d "${backupServerZielPfad2}/${Share3Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share3Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -343,7 +343,7 @@ fi
 echo
 
 # Share4Name
-if [ -d "${backupServerZielPfad2}/${Share4Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share4Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -354,7 +354,7 @@ fi
 echo
 
 # Share5Name
-if [ -d "${backupServerZielPfad2}/${Share5Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share5Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -365,7 +365,7 @@ fi
 echo
 
 # Share6Name
-if [ -d "${backupServerZielPfad2}/${Share6Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share6Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -376,7 +376,7 @@ fi
 echo
 
 # Share7Name
-if [ -d "${backupServerZielPfad2}/${Share7Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share7Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -387,7 +387,7 @@ fi
 echo
 
 # Share8Name
-if [ -d "${backupServerZielPfad2}/${Share8Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share8Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -398,7 +398,7 @@ fi
 echo
 
 # Share9Name
-if [ -d "${backupServerZielPfad2}/${Share9Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share9Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -409,7 +409,7 @@ fi
 echo
 
 # Share10Name
-if [ -d "${backupServerZielPfad2}/${Share10Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share10Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -420,7 +420,7 @@ fi
 echo
 
 # Share11Name
-if [ -d "${backupServerZielPfad2}/${Share11Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share11Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -431,7 +431,7 @@ fi
 echo
 
 # Share12Name
-if [ -d "${backupServerZielPfad2}/${Share12Name}" ]
+if [ -d "${backupServerTargetPath2}/${Share12Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -536,7 +536,7 @@ echo "<font color='blue'>This may take longer...</font>"
 
 # rsync DockerName1
 echo "<font color='blue'>rsync of "${DockerName1}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName1}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName1}" "${mainPathAppData}"
 echo
 
 # wait 12
@@ -544,7 +544,7 @@ sleep 5
 
 # rsync DockerName2
 echo "<font color='blue'>rsync of "${DockerName2}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName2}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName2}" "${mainPathAppData}"
 echo
 
 # wait 13
@@ -552,7 +552,7 @@ sleep 5
 
 # rsync DockerName3
 echo "<font color='blue'>rsync of "${DockerName3}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName3}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName3}" "${mainPathAppData}"
 echo
 
 # wait 14
@@ -560,7 +560,7 @@ sleep 5
 
 # rsync DockerName4
 echo "<font color='blue'>rsync of "${DockerName4}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName4}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName4}" "${mainPathAppData}"
 echo
 
 # wait 15
@@ -568,7 +568,7 @@ sleep 5
 
 # rsync DockerName5
 echo "<font color='blue'>rsync of "${DockerName5}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName5}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName5}" "${mainPathAppData}"
 echo
 
 # wait 16
@@ -576,7 +576,7 @@ sleep 5
 
 # rsync DockerName6
 echo "<font color='blue'>rsync of "${DockerName6}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName6}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName6}" "${mainPathAppData}"
 echo
 
 # wait 17
@@ -584,7 +584,7 @@ sleep 5
 
 # rsync DockerName7
 echo "<font color='blue'>rsync of "${DockerName7}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName7}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName7}" "${mainPathAppData}"
 echo
 
 # wawaitrten 18
@@ -592,7 +592,7 @@ sleep 5
 
 # rsync DockerName8
 echo "<font color='blue'>rsync of "${DockerName8}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName8}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName8}" "${mainPathAppData}"
 echo
 
 # wait 19
@@ -600,7 +600,7 @@ sleep 5
 
 # rsync DockerName9
 echo "<font color='blue'>rsync of "${DockerName9}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName9}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName9}" "${mainPathAppData}"
 echo
 
 # wait 20
@@ -608,7 +608,7 @@ sleep 5
 
 # rsync DockerName10
 echo "<font color='blue'>rsync of "${DockerName10}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName10}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName10}" "${mainPathAppData}"
 echo
 
 # wait 21
@@ -616,7 +616,7 @@ sleep 5
 
 # rsync DockerName11
 echo "<font color='blue'>rsync of "${DockerName11}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName11}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName11}" "${mainPathAppData}"
 echo
 
 # wait 22
@@ -624,7 +624,7 @@ sleep 5
 
 # rsync DockerName12
 echo "<font color='blue'>rsync of "${DockerName12}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName12}" "${hauptPfadAppData}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}/${DockerName12}" "${mainPathAppData}"
 echo
 
 # wait 23
@@ -632,7 +632,7 @@ sleep 5
 
 # rsync Share1Name
 echo "<font color='blue'>rsync of "${Share1Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share1Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share1Name}" "${mainPathShare}"
 echo
 
 # wait 24
@@ -640,7 +640,7 @@ sleep 5
 
 # rsync Share2Name
 echo "<font color='blue'>rsync of "${Share2Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share2Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share2Name}" "${mainPathShare}"
 echo
 
 # wait 25
@@ -648,7 +648,7 @@ sleep 5
 
 # rsync Share3Name
 echo "<font color='blue'>rsync of "${Share3Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share3Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share3Name}" "${mainPathShare}"
 echo
 
 # wait 26
@@ -656,7 +656,7 @@ sleep 5
 
 # rsync Share4Name
 echo "<font color='blue'>rsync of "${Share4Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share4Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share4Name}" "${mainPathShare}"
 echo
 
 # wait 27
@@ -664,7 +664,7 @@ sleep 5
 
 # rsync Share5Name
 echo "<font color='blue'>rsync of "${Share5Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share5Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share5Name}" "${mainPathShare}"
 echo
 
 # wait 28
@@ -672,7 +672,7 @@ sleep 5
 
 # rsync Share6Name
 echo "<font color='blue'>rsync of "${Share6Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share6Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share6Name}" "${mainPathShare}"
 echo
 
 # wait 29
@@ -680,7 +680,7 @@ sleep 5
 
 # rsync Share7Name
 echo "<font color='blue'>rsync of "${Share7Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share7Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share7Name}" "${mainPathShare}"
 echo
 
 # wait 30
@@ -688,7 +688,7 @@ sleep 5
 
 # rsync Share8Name
 echo "<font color='blue'>rsync of "${Share8Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share8Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share8Name}" "${mainPathShare}"
 echo
 
 # wait 31
@@ -696,7 +696,7 @@ sleep 5
 
 # rsync Share9Name
 echo "<font color='blue'>rsync of "${Share9Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share9Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share9Name}" "${mainPathShare}"
 echo
 
 # wait 32
@@ -704,7 +704,7 @@ sleep 5
 
 # rsync Share10Name
 echo "<font color='blue'>rsync of "${Share10Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share10Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share10Name}" "${mainPathShare}"
 echo
 
 # wait 33
@@ -712,7 +712,7 @@ sleep 5
 
 # rsync Share11Name
 echo "<font color='blue'>rsync of "${Share11Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share11Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share11Name}" "${mainPathShare}"
 echo
 
 # wait 34
@@ -720,7 +720,7 @@ sleep 5
 
 # rsync Share12Name
 echo "<font color='blue'>rsync of "${Share12Name}"...</font>"
-sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad2}/${Share12Name}" "${hauptPfadshare}"
+sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath2}/${Share12Name}" "${mainPathShare}"
 echo
 
 # wait 35
@@ -732,7 +732,7 @@ echo "<font color='blue'>Check if data is in the target...</font>"
 
 
 # DockerName1
-if [ test -d "${hauptPfadAppData}/${DockerName1}" ]
+if [ test -d "${mainPathAppData}/${DockerName1}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -741,7 +741,7 @@ fi
 echo 
 
 # DockerName2
-if [ test -d "${hauptPfadAppData}/${DockerName2}" ]
+if [ test -d "${mainPathAppData}/${DockerName2}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -750,7 +750,7 @@ fi
 echo 
 
 # DockerName3
-if [ test -d "${hauptPfadAppData}/${DockerName3}" ]
+if [ test -d "${mainPathAppData}/${DockerName3}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -759,7 +759,7 @@ fi
 echo 
 
 # DockerName4
-if [ test -d "${hauptPfadAppData}/${DockerName4}" ]
+if [ test -d "${mainPathAppData}/${DockerName4}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -768,7 +768,7 @@ fi
 echo 
 
 # DockerName5
-if [ test -d "${hauptPfadAppData}/${DockerName5}" ]
+if [ test -d "${mainPathAppData}/${DockerName5}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -777,7 +777,7 @@ fi
 echo 
 
 # DockerName6
-if [ test -d "${hauptPfadAppData}/${DockerName6}" ]
+if [ test -d "${mainPathAppData}/${DockerName6}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -786,7 +786,7 @@ fi
 echo 
 
 # DockerName7
-if [ test -d "${hauptPfadAppData}/${DockerName7}" ]
+if [ test -d "${mainPathAppData}/${DockerName7}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -795,7 +795,7 @@ fi
 echo  
 
 # DockerName8
-if [ test -d "${hauptPfadAppData}/${DockerName8}" ]
+if [ test -d "${mainPathAppData}/${DockerName8}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -805,7 +805,7 @@ echo
 
 
 # DockerName9
-if [ test -d "${hauptPfadAppData}/${DockerName9}" ]
+if [ test -d "${mainPathAppData}/${DockerName9}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -814,7 +814,7 @@ fi
 echo 
 
 # DockerName10
-if [ test -d "${hauptPfadAppData}/${DockerName10}" ]
+if [ test -d "${mainPathAppData}/${DockerName10}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -823,7 +823,7 @@ fi
 echo 
 
 # DockerName11
-if [ test -d "${hauptPfadAppData}/${DockerName11}" ]
+if [ test -d "${mainPathAppData}/${DockerName11}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -832,7 +832,7 @@ fi
 echo 
 
 # DockerName12
-if [ test -d "${hauptPfadAppData}/${DockerName12}" ]
+if [ test -d "${mainPathAppData}/${DockerName12}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -842,7 +842,7 @@ echo
 
 
 # Share1
-if [ test -d "${hauptPfadshare}/${Share1Name}" ]
+if [ test -d "${mainPathShare}/${Share1Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -851,7 +851,7 @@ fi
 echo
 
 # Share2
-if [ test -d "${hauptPfadshare}/${Share2Name}" ]
+if [ test -d "${mainPathShare}/${Share2Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -860,7 +860,7 @@ fi
 echo
 
 # Share3
-if [ test -d "${hauptPfadshare}/${Share3Name}" ]
+if [ test -d "${mainPathShare}/${Share3Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -869,7 +869,7 @@ fi
 echo
 
 # Share4
-if [ test -d "${hauptPfadshare}/${Share4Name}" ]
+if [ test -d "${mainPathShare}/${Share4Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -878,7 +878,7 @@ fi
 echo
 
 # Share5
-if [ test -d "${hauptPfadshare}/${Share5Name}" ]
+if [ test -d "${mainPathShare}/${Share5Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -887,7 +887,7 @@ fi
 echo
 
 # Share6
-if [ test -d "${hauptPfadshare}/${Share6Name}" ]
+if [ test -d "${mainPathShare}/${Share6Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -896,7 +896,7 @@ fi
 echo
 
 # Share7
-if [ test -d "${hauptPfadshare}/${Share7Name}" ]
+if [ test -d "${mainPathShare}/${Share7Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -905,7 +905,7 @@ fi
 echo
 
 # Share8
-if [ test -d "${hauptPfadshare}/${Share8Name}" ]
+if [ test -d "${mainPathShare}/${Share8Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -914,7 +914,7 @@ fi
 echo
 
 # Share9
-if [ test -d "${hauptPfadshare}/${Share9Name}" ]
+if [ test -d "${mainPathShare}/${Share9Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -923,7 +923,7 @@ fi
 echo
 
 # Share10
-if [ test -d "${hauptPfadshare}/${Share10Name}" ]
+if [ test -d "${mainPathShare}/${Share10Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -932,7 +932,7 @@ fi
 echo
 
 # Share11
-if [ test -d "${hauptPfadshare}/${Share11Name}" ]
+if [ test -d "${mainPathShare}/${Share11Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -941,7 +941,7 @@ fi
 echo
 
 # Share12
-if [ test -d "${hauptPfadshare}/${Share12Name}" ]
+if [ test -d "${mainPathShare}/${Share12Name}" ]
   then
     echo "<font color='green'>OK</font>"
   else
@@ -1035,7 +1035,7 @@ echo
 echo
 
 # Close
-if [ -d $hauptPfadAppData ] && [ -d $hauptPfadshare ]
+if [ -d $mainPathAppData ] && [ -d $mainPathShare ]
   then
     /usr/local/emhttp/webGui/scripts/notify -i normal -s "Restore completed." -d "Restore written successfully."
     echo "<font color='green'>Restore completed successfully.</font>"
