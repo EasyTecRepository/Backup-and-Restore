@@ -6,7 +6,7 @@
 # This script is written for rsync transfer of (external backup) Proxmox data to an external Unraid server.
 # This script can only be used for Docker environments that write the backup to a Proxmox server.
 # Created by Easy Tec (youtube.com/EasyTec100)
-# Instructions (German): https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/
+# Instructions (German): https://easytec.tech/index.php/2022/04/08/backupskript-fuer-unraid-auf-proxmox/
 # This script must be executed by hand!
 # Script Language: English
 #
