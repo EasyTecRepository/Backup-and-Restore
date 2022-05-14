@@ -135,16 +135,13 @@ then
 fi
 
 # Fragen vor anfang
-echo "<font color='yellow'>Moechtest du dieses Skript wirklich ausfuehren?</font>"
-echo "<font color='yellow'>Dieses Srkipt spielt deine Daten vom Backupserver auf diesen Unraidserver.</font>"
-echo "<font color='yellow'>Hierbei koennen fehler auftreten. Trotzdem fortfahren? [y/n]</font>"
-if [ $1 == "y" ]
-  then
-    echo "<font color='yellow'>Fahre fort...</font>"
-  else
-    echo "<font color='yellow'>Breche ab...</font>"
-    exit 1
-fi
+echo "<font color='orange'>Moechtest du dieses Skript wirklich ausfuehren?</font>"
+echo "<font color='orange'>Dieses Skript spielt deine Daten vom Backupserver auf diesen Unraidserver.</font>"
+echo "<font color='orange'>Hierbei koennen fehler auftreten. Trotzdem fortfahren?</font>"
+echo "<font color='red'>[Skript fährt in 20 Sekunden automatisch fort!]</font>"
+echo "<font color='orange'>[Fuer Abbrechen das X oben rechts druecken!]</font>"
+sleep 20
+echo "<font color='green'>Fahre fort...</font>"
 
 # Backup-Server starten
 echo "<font color='blue'>Backup Server wird gestartet...</font>"
