@@ -135,16 +135,13 @@ then
 fi
 
 # Questions before beginning
-echo "<font color='yellow'>Do you really want to run this script?</font>"
-echo "<font color='yellow'>This srkipt plays your data from the backup server to this unraid server.</font>"
-echo "<font color='yellow'>Errors may occur during this process. Continue anyway? [y/n]</font>"
-if [ $1 == "y" ]
-  then
-    echo "<font color='yellow'>Continue...</font>"
-  else
-    echo "<font color='yellow'>Abort...</font>"
-    exit 1
-fi
+echo "<font color='orange'>Do you really want to run this script?</font>"
+echo "<font color='orange'>This script plays your data from the backup server to this unraid server.</font>"
+echo "<font color='orange'>Errors may occur during this process. Continue anyway?</font>"
+echo "<font color='red'>[Script continues automatically in 20 seconds!]</font>"
+echo "<font color='orange'>[Press the X in the upper right corner to cancel]</font>"
+sleep 20
+echo "<font color='green'>Continue...</font>"
 
 # Start backup server
 echo "<font color='blue'>Backup Server is started...</font>"
