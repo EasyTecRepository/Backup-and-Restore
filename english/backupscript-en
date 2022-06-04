@@ -41,8 +41,8 @@ rsync_user="rsyncuser"
 # default path AppData(pre-path)
 mainPathAppData="/mnt/user/appdata"
 
-## Docker names ##
-## Best database always at the end ##
+## Docker names - Please enter in the order in which they should be stopped ##
+## TIP: ALWAYS specify database as LAST! (So this will be stopped last and started first)
 
 # Name of the DockerName1
 DockerName1="docker1"
