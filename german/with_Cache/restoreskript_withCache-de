@@ -50,7 +50,7 @@ hauptPfadAppData="/mnt/user/appdata"
 hauptPfadCache="/mnt/cache"
 
 ## Docker-namen - Bitte in reihenfolge eingeben, in der sie gestoppt werden sollen ##
-## Am besten Datenbank immer am Schluss ##
+## TIPP: Datenbank IMMER als LETZTES angeben! (So wird diese als letztes gestoppt und als erstes gestartet)
 
 # Name des DockerName1
 DockerName1="Docker1"
@@ -277,7 +277,7 @@ fi
 
 echo 
 
-# DockerNameDatenbank
+# DockerName9
 if [ -d "${backupServerZielPfad}/${DockerName9}" ]
   then
     echo "<font color='green'>OK</font>"
@@ -516,7 +516,7 @@ docker stop "${DockerName8}"
 # warten 8
 sleep 5
 
-# DockerNameDatenbank
+# DockerName9
 echo "<font color='blue'>Stoppe "${DockerName9}"...</font>"
 docker stop "${DockerName9}"
 
@@ -612,7 +612,7 @@ echo
 # warten 19
 sleep 5
 
-# rsync DockerNameDatenbank
+# rsync DockerName9
 echo "<font color='blue'>rsync von "${DockerName9}"...</font>"
 sudo rsync -az --progress "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}/${DockerName9}" "${hauptPfadAppData}"
 echo
@@ -977,14 +977,14 @@ echo "<font color='black'>Starte Docker...</font>"
 
 # DockerName12
 echo "<font color='blue'>Starte "${DockerName12}"...</font>"
-docker start "${DockerNameDatenbank}"
+docker start "${DockerName12}"
 
 # warten 37
 sleep 5
 
-# DockerName12
-echo "<font color='blue'>Starte "${DockerName12}"...</font>"
-docker start "${DockerName12}"
+# DockerName11
+echo "<font color='blue'>Starte "${DockerName11}"...</font>"
+docker start "${DockerName11}"
 
 # warten 38
 sleep 5
