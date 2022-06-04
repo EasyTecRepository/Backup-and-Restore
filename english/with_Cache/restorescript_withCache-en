@@ -50,7 +50,7 @@ mainPathAppData="/mnt/user/appdata"
 mainPathCache="/mnt/cache"
 
 ## Docker names - Please enter in the order in which they should be stopped ##
-## Best database always at the end ##
+## TIP: ALWAYS specify database as LAST! (So this will be stopped last and started first)
 
 # Name of the DockerName1
 DockerName1="Docker1"
@@ -983,74 +983,81 @@ docker start "${DockerName12}"
 # wait 37
 sleep 5
 
+# DockerName11
+echo "<font color='blue'>Start "${DockerName11}"...</font>"
+docker start "${DockerName11}"
+
+# wait 38
+sleep 5
+
 # DockerName10
 echo "<font color='blue'>Start "${DockerName10}"...</font>"
 docker start "${DockerName10}"
 
-# wait 38
+# wait 39
 sleep 5
 
 # DockerName9
 echo "<font color='blue'>Start "${DockerName9}"...</font>"
 docker start "${DockerName9}"
 
-# wait 39
+# wait 40
 sleep 5
 
 # DockerName8
 echo "<font color='blue'>Start "${DockerName8}"...</font>"
 docker start "${DockerName8}"
 
-# wait 40
+# wait 41
 sleep 5
 
 # DockerName7
 echo "<font color='blue'>Start "${DockerName7}"...</font>"
 docker start "${DockerName7}"
 
-# wait 41
+# wait 42
 sleep 5
 
 # DockerName6
 echo "<font color='blue'>Start "${DockerName6}"...</font>"
 docker start "${DockerName6}"
 
-# wait 42
+# wait 43
 sleep 5
 
 # DockerName5
 echo "<font color='blue'>Start "${DockerName5}"...</font>"
 docker start "${DockerName5}"
 
-# wait 43
+# wait 44
 sleep 5
 
 # DockerName4
 echo "<font color='blue'>Start "${DockerName4}"...</font>"
 docker start "${DockerName4}"
 
-# wait 44
+# wait 45
 sleep 5
 
 # DockerName3
 echo "<font color='blue'>Start "${DockerName3}"...</font>"
 docker start "${DockerName3}"
 
-# wait 45
+# wait 46
 sleep 5
 
 # DockerName2
 echo "<font color='blue'>Start "${DockerName2}"...</font>"
 docker start "${DockerName2}"
 
-# wait 46
+# wait 47
 sleep 5
 
 # DockerName1
 echo "<font color='blue'>Start "${DockerName1}"...</font>"
 docker start "${DockerName1}"
 
-# wait 47
+# wait 48
 sleep 5
 
 # Create order
