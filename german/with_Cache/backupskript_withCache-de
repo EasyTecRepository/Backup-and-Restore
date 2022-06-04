@@ -46,8 +46,8 @@ hauptPfadAppData="/mnt/user/appdata"
 # Im Cache werden wichtige Daten der Docker gespeichert. Ohne diese könnte der Docker nicht laufen!
 hauptPfadCache="/mnt/cache"
 
-## Docker-namen ##
-## Am besten Datenbank immer am Schluss ##
+## Docker-namen - Bitte in reihenfolge eingeben, in der sie gestoppt werden sollen ##
+## TIPP: Datenbank IMMER als LETZTES angeben! (So wird diese als letztes gestoppt und als erstes gestartet)
 
 # Name des DockerName1
 DockerName1="docker1"
@@ -285,7 +285,7 @@ fi
 
 echo 
 
-# DockerNameDatenbank
+# DockerName9
 if [ -d "${hauptPfadAppData}/${DockerName9}" ]
   then
     echo "<font color='green'>OK</font>"
@@ -658,7 +658,7 @@ echo
 # warten 19
 sleep 5
 
-# rsync DockerNameDatenbank
+# rsync DockerName9
 echo "<font color='blue'>rsync von "${DockerName9}"...</font>"
 sudo rsync --ignore-existing -az "${hauptPfadAppData}/${DockerName9}" "${rsync_user}"@"${backupServerIP}":"${backupServerZielPfad}"
 echo
