@@ -85,13 +85,8 @@ DockerName11="docker11"
 # Name of the DockerName12
 DockerName12="docker12"
 
-
-## Start/stop container control Docker ##
-## These variables are for the docker names 
-## These names can be other than the path (self specified above)!
-## Please specify in the following order:  Start as first > Start as last
-## Example: ContainerName1 will be STOPPED first and STARTED last
-## TIP: ALWAYS specify database as LAST! (This way it will be stopped last and started first).
+## Docker names - Please enter in the order in which they should be stopped ##
+## TIP: ALWAYS specify database as LAST! (So this will be stopped last and started first)
 
 # Name of the ContainerName1
 ContainerName1="Container1"
@@ -658,7 +653,7 @@ echo
 # wait 19
 sleep 5
 
-# rsync DockerNameDatenbank
+# rsync DockerName9
 echo "<font color='blue'>rsync of "${DockerName9}"...</font>"
 sudo rsync --ignore-existing -az "${mainPathAppData}/${DockerName9}" "${rsync_user}"@"${backupServerIP}":"${backupServerTargetPath}"
 echo
