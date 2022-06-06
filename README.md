@@ -15,7 +15,7 @@ With my scripts in this repository you can make a backup/Restore from an Unraid 
 In this scripts is to be noted:
 - Script is in german (english version coming soon)
 - Please adjust variables!
-- Instruction can be found on my german blog (https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/) [My blog will also be available in English soon]
+- Instruction can be found on my german blog ([https://easytec.tech/index.php/2021/10/24/backupskript-fuer-unraid-auf-proxmox/](https://easytec.tech/index.php/2022/04/08/backupskript-fuer-unraid-auf-proxmox/)) [My blog will also be available in English soon]
 - Read the README.md and the LICENCE.md carefully if you want to use or reuse the script. (more infos you can get on my blog)
 
 last change: 29.01.2022
