@@ -1,4 +1,4 @@
-# Scripts
+# Backup-and-Restore
 This repository is about backup/restore scripts for a Unraid system. (Script available in English and German).
 These backup/restore scripts have been tested by me personally. 
 However, I do not assume any liability if these scripts cause any damage. 
