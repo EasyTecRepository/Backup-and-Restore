@@ -18,4 +18,4 @@ In both languages there is a version with or without cache folder. By this I mea
 But if you don't use a cache, you have to use the normal script.
 
 
-last change: 08.04.2022
+last change: 19.06.2022
