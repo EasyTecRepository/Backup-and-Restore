@@ -36,6 +36,8 @@ But if you don't use a cache, you need to use the normal script.
 - **discord** (in the folder ```german/english /discord``` ): Backup/restore of the data + discordWebhook message
 - **extended** (in the folder ```german/english /extended``` ): backup/restore data + backup/restore database + discordWebhook message
 
+***Please note that there is currently no script for the "Cache" folder, where functions like "Discord" or "MariaDB" are available. This must be put together independently! (Or it will be added at a later time and inserted here)***
+
 # Usage
 1. Download the backup/restore script.
 2. **ADJUST ALL VARIABLES** in the script
