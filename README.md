@@ -30,6 +30,11 @@ But if you don't use a cache, you need to use the normal script.
 - Authorize Proxmox ssh access (by IP address) ([YouTube-Tutorial-german](https://youtu.be/K1mC23QjsSY))
 - activate WakeOnLan autostart for Proxmox ([YouTube-Tutorial-german](https://youtu.be/lArZdf0d_Ow))
 
+# Explanation of scripts:
+- **Normal** (directly in the ```german/english``` folder): Backup/Restore of the data
+- **mariadb_backup** (in the folder ```german/english /mariadb_backup``` ): backup/restore of data + backup/restore database
+- **discord** (in the folder ```german/english /discord``` ): Backup/restore of the data + discordWebhook message
+- **extended** (in the folder ```german/english /extended``` ): backup/restore data + backup/restore database + discordWebhook message
 
 # Usage
 1. Download the backup/restore script.
@@ -39,4 +44,4 @@ But if you don't use a cache, you need to use the normal script.
 5. Run the script by clicking the "RUN SCRIPT" button
 
 
-last change: 23.09.2022
+last change: 25.09.2022
