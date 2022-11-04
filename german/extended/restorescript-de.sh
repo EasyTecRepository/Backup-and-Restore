@@ -83,6 +83,49 @@ DockerName11="docker11"
 # Name des DockerName12
 DockerName12="docker12"
 
+## Start/Stopp Container steuerung Docker ##
+## Diese Variablen sind fuer die Dockernamen 
+## Diese Namen koennen auch andere als der Pfad (selbststaendig oben angegeben) sein!
+## Bitte in folgender Reihenfolge angeben:  Als erstes Starten > Als letztes Starten
+## Beispiel: ContainerName1 wird zuerst GESTOPPT und als letztes GESTARTET
+## TIPP: Datenbank IMMER als LETZTES angeben! (So wird diese als letztes gestoppt und als erstes gestartet)
+
+# Name des ContainerName1
+ContainerName1="Container1"
+
+# Name des ContainerName2
+ContainerName2="Container2"
+
+# Name des ContainerName3
+ContainerName3="Container3"
+
+# Name des ContainerName4
+ContainerName4="Container4"
+
+# Name des ContainerName5
+ContainerName5="Container5"
+
+# Name des ContainerName6
+ContainerName6="Container6"
+
+# Name des ContainerName7
+ContainerName7="Container7"
+
+# Name des ContainerName8
+ContainerName8="Container8"
+
+# Name des ContainerName9
+ContainerName9="Container9"
+
+# Name des ContainerName10
+ContainerName10="Container10"
+
+# Name des ContainerName11
+ContainerName11="Container11"
+
+# Name des ContainerName12
+ContainerName12="Container12"
+
 
 # Standard-Pfad share (vor-pfad)
 hauptPfadshare="/mnt/user"
@@ -543,86 +586,86 @@ echo
 echo "<font color='black'>Stoppe Docker...</font>"
 echo
 
-# DockerName1
-echo "<font color='blue'>Stoppe "${DockerName1}"...</font>"
-docker stop "${DockerName1}"
+# ContainerName1
+echo "<font color='blue'>Stoppe "${ContainerName1}"...</font>"
+docker stop "${ContainerName1}"
 
 # warten 1
 sleep 5
 
-# DockerName2
-echo "<font color='blue'>Stoppe "${DockerName2}"...</font>"
-docker stop "${DockerName2}"
+# ContainerName2
+echo "<font color='blue'>Stoppe "${ContainerName2}"...</font>"
+docker stop "${ContainerName2}"
 
 # warten 2
 sleep 5
 
-# DockerName3
-echo "<font color='blue'>Stoppe "${DockerName3}"...</font>"
-docker stop "${DockerName3}"
+# ContainerName3
+echo "<font color='blue'>Stoppe "${ContainerName3}"...</font>"
+docker stop "${ContainerName3}"
 
 # warten 3
 sleep 5
 
-# DockerName4
-echo "<font color='blue'>Stoppe "${DockerName4}"...</font>"
-docker stop "${DockerName4}"
+# ContainerName4
+echo "<font color='blue'>Stoppe "${ContainerName4}"...</font>"
+docker stop "${ContainerName4}"
 
 # warten 4
 sleep 5
 
-# DockerName5
-echo "<font color='blue'>Stoppe "${DockerName5}"...</font>"
-docker stop "${DockerName5}"
+# ContainerName5
+echo "<font color='blue'>Stoppe "${ContainerName5}"...</font>"
+docker stop "${ContainerName5}"
 
 # warten 5
 sleep 5
 
-# DockerName6
-echo "<font color='blue'>Stoppe "${DockerName6}"...</font>"
-docker stop "${DockerName6}"
+# ContainerName6
+echo "<font color='blue'>Stoppe "${ContainerName6}"...</font>"
+docker stop "${ContainerName6}"
 
 # warten 6
 sleep 5
 
-# DockerName7
-echo "<font color='blue'>Stoppe "${DockerName7}"...</font>"
-docker stop "${DockerName7}"
+# ContainerName7
+echo "<font color='blue'>Stoppe "${ContainerName7}"...</font>"
+docker stop "${ContainerName7}"
 
 # warten 7
 sleep 5
 
-# DockerName8
-echo "<font color='blue'>Stoppe "${DockerName8}"...</font>"
-docker stop "${DockerName8}"
+# ContainerName8
+echo "<font color='blue'>Stoppe "${ContainerName8}"...</font>"
+docker stop "${ContainerName8}"
 
 # warten 8
 sleep 5
 
-# DockerName9
-echo "<font color='blue'>Stoppe "${DockerName9}"...</font>"
-docker stop "${DockerName9}"
+# ContainerName9
+echo "<font color='blue'>Stoppe "${ContainerName9}"...</font>"
+docker stop "${ContainerName9}"
 
 # warten 8
 sleep 5
 
-# DockerName10
-echo "<font color='blue'>Stoppe "${DockerName10}"...</font>"
-docker stop "${DockerName10}"
+# ContainerName10
+echo "<font color='blue'>Stoppe "${ContainerName10}"...</font>"
+docker stop "${ContainerName10}"
 
 # warten 9
 sleep 5
 
-# DockerName11
-echo "<font color='blue'>Stoppe "${DockerName11}"...</font>"
-docker stop "${DockerName11}"
+# ContainerName11
+echo "<font color='blue'>Stoppe "${ContainerName11}"...</font>"
+docker stop "${ContainerName11}"
 
 # warten 10
 sleep 5
 
-# DockerName12
-echo "<font color='blue'>Stoppe "${DockerName12}"...</font>"
-docker stop "${DockerName12}"
+# ContainerName12
+echo "<font color='blue'>Stoppe "${ContainerName12}"...</font>"
+docker stop "${ContainerName12}"
 
 # warten 11
 sleep 5
@@ -1171,86 +1214,86 @@ fi
 # Starte Docker
 echo "<font color='black'>Starte Docker...</font>"
 
-# DockerName12
-echo "<font color='blue'>Starte "${DockerName12}"...</font>"
-docker start "${DockerName9}"
+# ContainerName12
+echo "<font color='blue'>Starte "${ContainerName12}"...</font>"
+docker start "${ContainerName12}"
 
 # warten 36
 sleep 5
 
-# DockerName11
-echo "<font color='blue'>Starte "${DockerName11}"...</font>"
-docker start "${DockerName11}"
+# ContainerName11
+echo "<font color='blue'>Starte "${ContainerName11}"...</font>"
+docker start "${ContainerName11}"
 
 # warten 37
 sleep 5
 
-# DockerName10
-echo "<font color='blue'>Starte "${DockerName10}"...</font>"
-docker start "${DockerName10}"
+# ContainerName10
+echo "<font color='blue'>Starte "${ContainerName10}"...</font>"
+docker start "${ContainerName10}"
 
 # warten 38
 sleep 5
 
-# DockerName9
-echo "<font color='blue'>Starte "${DockerName9}"...</font>"
-docker start "${DockerName9}"
+# ContainerName9
+echo "<font color='blue'>Starte "${ContainerName9}"...</font>"
+docker start "${ContainerName9}"
 
 # warten 39
 sleep 5
 
-# DockerName8
-echo "<font color='blue'>Starte "${DockerName8}"...</font>"
-docker start "${DockerName8}"
+# ContainerName8
+echo "<font color='blue'>Starte "${ContainerName8}"...</font>"
+docker start "${ContainerName8}"
 
 # warten 40
 sleep 5
 
-# DockerName7
-echo "<font color='blue'>Starte "${DockerName7}"...</font>"
-docker start "${DockerName7}"
+# ContainerName7
+echo "<font color='blue'>Starte "${ContainerName7}"...</font>"
+docker start "${ContainerName7}"
 
 # warten 41
 sleep 5
 
-# DockerName6
-echo "<font color='blue'>Starte "${DockerName6}"...</font>"
-docker start "${DockerName6}"
+# ContainerName6
+echo "<font color='blue'>Starte "${ContainerName6}"...</font>"
+docker start "${ContainerName6}"
 
 # warten 42
 sleep 5
 
-# DockerName5
-echo "<font color='blue'>Starte "${DockerName5}"...</font>"
-docker start "${DockerName5}"
+# ContainerName5
+echo "<font color='blue'>Starte "${ContainerName5}"...</font>"
+docker start "${ContainerName5}"
 
 # warten 43
 sleep 5
 
-# DockerName4
-echo "<font color='blue'>Starte "${DockerName4}"...</font>"
-docker start "${DockerName4}"
+# ContainerName4
+echo "<font color='blue'>Starte "${ContainerName4}"...</font>"
+docker start "${ContainerName4}"
 
 # warten 44
 sleep 5
 
-# DockerName3
-echo "<font color='blue'>Starte "${DockerName3}"...</font>"
-docker start "${DockerName3}"
+# ContainerName3
+echo "<font color='blue'>Starte "${ContainerName3}"...</font>"
+docker start "${ContainerName3}"
 
 # warten 45
 sleep 5
 
-# DockerName2
-echo "<font color='blue'>Starte "${DockerName2}"...</font>"
-docker start "${DockerName2}"
+# ContainerName2
+echo "<font color='blue'>Starte "${ContainerName2}"...</font>"
+docker start "${ContainerName2}"
 
 # warten 46
 sleep 5
 
-# DockerName1
-echo "<font color='blue'>Starte "${DockerName1}"...</font>"
-docker start "${DockerName1}"
+# ContainerName1
+echo "<font color='blue'>Starte "${ContainerName1}"...</font>"
+docker start "${ContainerName1}"
 
 # warten 47
 sleep 5
