@@ -11,7 +11,7 @@ With my scripts in this repository you can make a backup/restore from a Unraid s
 
 - Adjust all variables! Otherwise errors may occur.
 
-- Instructions can be found in my blog: [German](https://easytec.tech/index.php/2022/04/08/backupskript-fuer-unraid-auf-proxmox/) / [English](https://easytec.tech/index.php/en/2022/05/14/backup-script-for-unraid-on-proxmox/)
+- Instructions can be found in my blog: [German](https://blog.easytec.tech/index.php/2022/11/14/backupskript-fuer-unraid-auf-proxmox/) / [English](https://easytec.tech/index.php/en/2022/05/14/backup-script-for-unraid-on-proxmox/)
 
 - All my scripts are currently in BETA VERSION! There may be errors or bugs!
 
